@@ -28,7 +28,7 @@ public class RobotMap {
     public static SpeedController drivetrainRightDriveVictors;
     public static Encoder drivetrainRightDriveEncoder;
     public static PIDController drivetrainRightDrive;
-    public static SpeedController shooterWheelVictors(2);
+    public static SpeedController shooterWheelVictors;
     public static Encoder shooterWheelEncoder;
     public static PIDController shooterWheels;
     public static Encoder shooterPitchEncoder;
@@ -77,15 +77,15 @@ public class RobotMap {
 	LiveWindow.addActuator("Drivetrain", "Right Drive", drivetrainRightDrive);
         drivetrainRightDrive.setContinuous(false); drivetrainRightDrive.setAbsoluteTolerance(0.2); 
         drivetrainRightDrive.setOutputRange(-1.0, 1.0);        
-        shooterWheelVictors(2) = new Victor(1, 3);
-	LiveWindow.addActuator("Shooter", "Wheel Victors (2)", (Victor) shooterWheelVictors(2));
+        shooterWheelVictors = new Victor(1, 3);
+	LiveWindow.addActuator("Shooter", "Wheel Victors (2)", (Victor) shooterWheelVictors);
         
         shooterWheelEncoder = new Encoder(1, 5, 1, 6, 1, 7, false);
 	LiveWindow.addSensor("Shooter", "Wheel Encoder", shooterWheelEncoder);
         shooterWheelEncoder.setDistancePerPulse(1.0);
         shooterWheelEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
         shooterWheelEncoder.start();
-        shooterWheels = new PIDController(1.0, 0.0, 0.0, 0.0, shooterWheelEncoder, shooterWheelVictors(2), 0.02);
+        shooterWheels = new PIDController(1.0, 0.0, 0.0, 0.0, shooterWheelEncoder, shooterWheelVictors, 0.02);
 	LiveWindow.addActuator("Shooter", "Wheels", shooterWheels);
         shooterWheels.setContinuous(false); shooterWheels.setAbsoluteTolerance(0.2); 
         shooterWheels.setOutputRange(-1.0, 1.0);        
