@@ -28,8 +28,8 @@ public class TankDriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        drivetrain = new RobotDrive(RobotMap.drivetrainLeftDriveVictors, 
-            RobotMap.drivetrainRightDriveVictors);
+        drivetrain = new RobotDrive(RobotMap.drivetrainLeftDrive, 
+            RobotMap.drivetrainRightDrive);
     }
 
     // Called repeatedly when this Command is scheduled to run
