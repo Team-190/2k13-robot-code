@@ -31,7 +31,7 @@ public class RobotMap {
     public static RobotDrive drivetrainTankDrive;
     public static Gyro drivetrainTargetingGyro;
     public static Gyro drivetrainSwingGyro;
-    public static SpeedController shooterWheelVictors(2);
+    public static SpeedController shooterWheelVictors;
     public static Encoder shooterWheelEncoder;
     public static PIDController shooterWheels;
     public static Encoder shooterPitchEncoder;
@@ -82,15 +82,15 @@ public class RobotMap {
         drivetrainSwingGyro = new Gyro(1, 2);
 	LiveWindow.addSensor("Drivetrain", "Swing Gyro", drivetrainSwingGyro);
         drivetrainSwingGyro.setSensitivity(0.007);
-        shooterWheelVictors(2) = new Victor(1, 3);
-	LiveWindow.addActuator("Shooter", "Wheel Victors (2)", (Victor) shooterWheelVictors(2));
+        shooterWheelVictors = new Victor(1, 3);
+	LiveWindow.addActuator("Shooter", "Wheel Victors (2)", (Victor) shooterWheelVictors);
         
         shooterWheelEncoder = new Encoder(1, 5, 1, 6, false, EncodingType.k4X);
 	LiveWindow.addSensor("Shooter", "Wheel Encoder", shooterWheelEncoder);
         shooterWheelEncoder.setDistancePerPulse(1.0);
         shooterWheelEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
         shooterWheelEncoder.start();
-        shooterWheels = new PIDController(1.0, 0.0, 0.0, 0.0, shooterWheelEncoder, shooterWheelVictors(2), 0.02);
+        shooterWheels = new PIDController(1.0, 0.0, 0.0, 0.0, shooterWheelEncoder, shooterWheelVictors, 0.02);
 	LiveWindow.addActuator("Shooter", "Wheels", shooterWheels);
         shooterWheels.setContinuous(false); shooterWheels.setAbsoluteTolerance(0.2); 
         shooterWheels.setOutputRange(-1.0, 1.0);        
