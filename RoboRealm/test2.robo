@@ -1,0 +1,105 @@
+<head><version>2.48.10</version></head>
+<Axis_Internet_Camera>
+  <auto_exposure>FALSE</auto_exposure>
+  <auto_back_light>TRUE</auto_back_light>
+  <color_level_value>50</color_level_value>
+  <auto_white_balance>TRUE</auto_white_balance>
+  <compression_index>5</compression_index>
+  <sharpness_value>50</sharpness_value>
+  <ip_address>10.1.90.11</ip_address>
+  <password>FRC</password>
+  <username>FRC</username>
+  <port>80</port>
+  <contrast_value>50</contrast_value>
+  <is_active>TRUE</is_active>
+  <brightness_value>31</brightness_value>
+</Axis_Internet_Camera>
+<Adaptive_Threshold>
+  <mean_offset>5</mean_offset>
+  <filter_size>25</filter_size>
+  <min_threshold>22</min_threshold>
+  <channel_type>2</channel_type>
+  <max_threshold>255</max_threshold>
+</Adaptive_Threshold>
+<Blob_Filter>
+  <filters>
+    <tab:5/>
+    <tab:2/>
+    <tab:4/>
+    <tab>
+      <filter>
+        <create_array>0</create_array>
+        <count_threshold>0</count_threshold>
+        <weight_threshold>0</weight_threshold>
+        <invert_count>0</invert_count>
+        <filter_id>8</filter_id>
+        <invert_threshold>0</invert_threshold>
+        <minimum_size>100</minimum_size>
+      </filter>
+    </tab>
+    <tab:6/>
+    <tab:3/>
+  </filters>
+  <sort_array_on_y>FALSE</sort_array_on_y>
+  <largest_is_background>FALSE</largest_is_background>
+  <sort_array_on_x>FALSE</sort_array_on_x>
+  <show_weights>FALSE</show_weights>
+  <create_blob_array_variable>FALSE</create_blob_array_variable>
+</Blob_Filter>
+<Close>
+  <restrict_dilation>FALSE</restrict_dilation>
+  <erode_count>24</erode_count>
+  <dilate_count>33</dilate_count>
+  <close_borders>FALSE</close_borders>
+  <kernal_shape>1</kernal_shape>
+  <symmetrical>FALSE</symmetrical>
+</Close>
+<Blob_Filter>
+  <filters>
+    <tab:5/>
+    <tab:2/>
+    <tab:4/>
+    <tab>
+      <filter:2>
+        <create_array>0</create_array>
+        <count_threshold>1</count_threshold>
+        <weight_threshold>0</weight_threshold>
+        <invert_count>0</invert_count>
+        <num_holes>1</num_holes>
+        <filter_id>91</filter_id>
+        <invert_threshold>0</invert_threshold>
+      </filter:2>
+      <filter>
+        <create_array>0</create_array>
+        <count_threshold>0</count_threshold>
+        <weight_threshold>0</weight_threshold>
+        <invert_count>0</invert_count>
+        <filter_id>67</filter_id>
+        <invert_threshold>0</invert_threshold>
+      </filter>
+    </tab>
+    <tab:6/>
+    <tab:3/>
+  </filters>
+  <sort_array_on_y>FALSE</sort_array_on_y>
+  <largest_is_background>FALSE</largest_is_background>
+  <sort_array_on_x>FALSE</sort_array_on_x>
+  <show_weights>FALSE</show_weights>
+  <create_blob_array_variable>FALSE</create_blob_array_variable>
+</Blob_Filter>
+<Blob_Replace>
+  <thickness>1</thickness>
+  <color_index>5</color_index>
+  <fill_shape>FALSE</fill_shape>
+  <order_array_on_x>FALSE</order_array_on_x>
+  <shape_index>13</shape_index>
+  <overlay_image>Source</overlay_image>
+  <order_array_on_y>FALSE</order_array_on_y>
+</Blob_Replace>
+<NetworkTables>
+  <port>1735</port>
+  <variable_type_index>0</variable_type_index>
+  <variables_to_send>BOUNDING_COORDINATES</variables_to_send>
+  <filter_type_index>0</filter_type_index>
+  <hostname>127.0.0.1</hostname>
+</NetworkTables>
