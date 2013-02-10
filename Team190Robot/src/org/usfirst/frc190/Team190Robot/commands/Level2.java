@@ -18,21 +18,23 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Level2 extends CommandGroup {
     
     public  Level2() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+        //extend our long arm
+        addSequential(new OSHAExtend());
+        //pivot forward
+        addSequential(new OSHAPivotForward());
+        //retract the OSHA
+        addSequential(new OSHARetract());
+        //wait for user input
+        addSequential(new WaitForNext());
+        //raise the MGAs
+        addSequential(new MGAExtend());
+        //retract the MGAs
+        addSequential(new MGARetract());
+        //we now the the OSHA and MGAs on the second rung
+        //wait for the user to hit next
+        addSequential(new WaitForNext());
+        //climb to level three
+        addSequential(new Level3());
+        
     }
 }
