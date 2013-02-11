@@ -11,6 +11,7 @@
 
 package org.usfirst.frc190.Team190Robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc190.Team190Robot.Robot;
 
 /**
  *
@@ -18,21 +19,22 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Level1 extends CommandGroup {
     
     public  Level1() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+        //get into the ready state, if not already there
+        addSequential(new ReadyForClimb());
+        
+        //extend the MGAs
+        addSequential(new MGAExtend());
+        //TODO: bumper bumpers engage
+        
+        //drive forward toward the bar
+        addSequential(new DrivetoLevel1());
+        //wait for user to press next
+        addSequential(new WaitForNext());
+        //pull up on the bar
+        addSequential(new MGARetract());
+        //wait for user to press next
+        addSequential(new WaitForNext());
+        //start the level two sequence
+        addSequential(new Level2());
     }
 }

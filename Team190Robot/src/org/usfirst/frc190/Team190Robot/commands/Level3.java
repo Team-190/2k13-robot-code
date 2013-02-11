@@ -18,21 +18,24 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Level3 extends CommandGroup {
     
     public  Level3() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+        //angle the osha backwards
+        addSequential(new OSHAPivotBack());
+        //raise the osha up
+        addSequential(new OSHAExtend());
+        //pivot the OSHA towards the bar
+        addSequential(new OSHAPivotForward());
+        //retract the OSHA and pull the robot up off the second tier
+        addSequential(new OSHARetract());
+        //wait for the next button
+        addSequential(new WaitForNext());
+        addSequential(new MGAExtend());
+        addSequential(new MGARetract());
+        //we're now hanging on the third tier by the OSHA and MGAs
+        //wait for the user to hit next
+        addSequential(new WaitForNext());
+        //WOMBO DAT COMBO
+        addSequential(new WomboCombo());
+        //disable all systems until game over
+        addSequential(new WaitToWin());        
     }
 }
