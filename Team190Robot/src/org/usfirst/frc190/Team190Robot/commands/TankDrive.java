@@ -13,7 +13,6 @@ package org.usfirst.frc190.Team190Robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc190.Team190Robot.Robot;
-import org.usfirst.frc190.Team190Robot.RobotMap;
 
 /**
  *
@@ -36,7 +35,7 @@ public class  TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        RobotMap.drivetrainTankDrive.tankDrive(Robot.oi.getLeftStick(), Robot.oi.getRightStick());
+        Robot.drivetrain.tankDrive(Robot.oi.getLeftStick(), Robot.oi.getRightStick());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,11 +45,12 @@ public class  TankDrive extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.drivetrain.tankDrive(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        RobotMap.drivetrainTankDrive.drive(0.0, 0.0);
+        end();
     }
 }

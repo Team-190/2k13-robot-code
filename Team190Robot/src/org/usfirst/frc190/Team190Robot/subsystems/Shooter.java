@@ -47,5 +47,23 @@ public class Shooter extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+
+    public void setPitch(double angle) {
+        pitch.setSetpoint(convertPitchToRotations(angle));
+        pitch.enable();
+    }
+
+    public void setSpeed(double speed) {
+        wheels.setSetpoint(speed);
+        wheels.enable();
+    }
+
+    public boolean isReadyToShoot() {
+        return pitch.onTarget() && wheels.onTarget();
+    }
+    
+    private double convertPitchToRotations(double pitch) {
+        return pitch; // TODO: Actually convert
+    }
 }
 
