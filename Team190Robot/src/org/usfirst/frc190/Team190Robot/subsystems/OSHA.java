@@ -33,10 +33,15 @@ public class OSHA extends Subsystem {
     private DigitalInput winchLowerLimit = new DigitalInput(RobotMap.OSHA_LOWER_LIMIT);
     private DigitalInput tensiometer = new DigitalInput(RobotMap.OSHA_TENSIOMETER);
     
+    // Current status of the extension solenoid
+    private boolean extensionStatus;
+    
     // OSHA Constants
     //TODO: Find the actual values to set the OSHA to
     public static final boolean OSHA_FORWARD = false;
     public static final boolean OSHA_BACKWARD = true;
+    public static final boolean EXTENSION_UP = true;
+    public static final boolean EXTENSION_DOWN = false;
 
     public OSHA(){
         // Put Components on Live Window
@@ -46,6 +51,10 @@ public class OSHA extends Subsystem {
         LiveWindow.addSensor("OSHA", "Winch Upper Limit", winchUpperLimit);
         LiveWindow.addSensor("OSHA", "Winch Lower Limit", winchLowerLimit);
         LiveWindow.addSensor("OSHA", "Tensiometer", tensiometer);
+        
+        // Start by firing the extension and setting the status to true
+        extensionSolenoid.set(EXTENSION_UP);
+        extensionStatus = EXTENSION_UP;
     }
     
     // Put methods for controlling this subsystem
@@ -55,8 +64,46 @@ public class OSHA extends Subsystem {
         setDefaultCommand(new OSHADoNothing());
     }
     
-    public void driveOSHA(int speed){
-        
+    /**
+     * Drives the OSHA at the given speed
+     * @param speed The speed to drive the OSHA at
+     */
+    public void driveOSHA(double speed){        
+        // Check to see which direction we are trying to move        
+        if(speed < 0){
+            // Check to make sure we don't go past the bottom limit.
+            // If we do, set the speed to 0, and make sure the extension is fired
+            if(winchLowerLimit.get()){
+                speed = 0;
+                if(extensionStatus == EXTENSION_DOWN){
+                    extensionSolenoid.set(EXTENSION_UP);
+                    extensionStatus = EXTENSION_UP;
+                }
+            }
+            
+            // If we are trying to lower the OSHA, make sure that the 
+            // extension is set to extension down
+            if(extensionStatus == EXTENSION_UP){
+                extensionSolenoid.set(EXTENSION_DOWN);
+                extensionStatus = EXTENSION_DOWN;
+            }
+            winchVictor.set(speed);
+        } else {
+            // Check to make sure we don't go past the upper limit.
+            // If we do, set the speed to 0 and let the next check make sure
+            // that the extension is up
+            if(winchUpperLimit.get()){
+                speed = 0;
+            }
+            
+            // We are trying to go up, so make sure that the extension is 
+            // set to extension up
+            if(extensionStatus == EXTENSION_DOWN){
+                extensionSolenoid.set(EXTENSION_UP);
+                extensionStatus = EXTENSION_UP;
+            }
+            winchVictor.set(speed);
+        }
     }
     
     /**

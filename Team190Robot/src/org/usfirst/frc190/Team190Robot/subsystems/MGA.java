@@ -49,8 +49,37 @@ public class MGA extends Subsystem {
         setDefaultCommand(new MGADoNothing());
     }
     
+    /**
+     * Sets the position of the OSHAs.  You should use the public variables
+     * in the MGA class
+     * @param pos The position to set the OSHA to
+     */
     public void setPosition(boolean pos){
         armSolenoid.set(pos);
+    }
+    
+    /**
+     * Tells whether the MGA's are on a bar
+     * @return True if we are on a bar, false otherwise
+     */
+    public boolean onBar(){
+        return leftArmLimit.get() && rightArmLimit.get();
+    }
+    
+    /**
+     * Returns whether the left MGA is on a bar.
+     * @return True if the left MGA is on a bar, false otherwise
+     */
+    public boolean leftOnBar(){
+        return leftArmLimit.get();
+    }
+    
+    /**
+     * Returns whether the right MGA is on a bar
+     * @return True if the left MGA is the bar, false otherwise
+     */
+    public boolean rightOnBar(){
+        return rightArmLimit.get();
     }
 }
 

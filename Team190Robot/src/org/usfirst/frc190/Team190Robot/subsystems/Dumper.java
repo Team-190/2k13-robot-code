@@ -41,6 +41,17 @@ public class Dumper extends Subsystem {
     private static final double kI_ELBOW = 0;
     private static final double kD_ELBOW = 0;
     
+    // Position Constants
+    // TODO: Find these constants
+    public static final double FEEDER_SLOT_ELBOW = 0.0;
+    public static final double FEEDER_SLOT_PIVOT = 0.0;
+    public static final double STORE_ELBOW = 0;
+    public static final double STORE_PIVOT = 0;
+    public static final double CLEAR_ELBOW = 0;
+    public static final double CLEAR_PIVOT = 0;
+    public static final double WOMBO_ELBOW = 0;
+    public static final double WOMBO_PIVOT = 0;
+    
     public Dumper(){
         // Set up sensors
         bucketEncoder.setDistancePerPulse(1.0);
@@ -68,5 +79,26 @@ public class Dumper extends Subsystem {
     // here. Call these from Commands.
     public void initDefaultCommand() {
         setDefaultCommand(new DumperDoNothing());
+    }
+    
+    // TODO: Determine if this is enough to control the elbow and pivot, or if
+    // we need more complex control to coordinate them
+    
+    /**
+     * Sets the position of the pivot joint.  For the most part, use the 
+     * constants defined in the class
+     * @param pos The position to move to
+     */
+    public void setPivot(double pos){
+        bucketPID.setSetpoint(pos);
+    }
+    
+    /**
+     * Sets the position of the elbow joint.  For the most part, use the
+     * constants defined in the class
+     * @param pos The position to set the elbow to
+     */
+    public void setElbow(double pos){
+        elbowPID.setSetpoint(pos);
     }
 }

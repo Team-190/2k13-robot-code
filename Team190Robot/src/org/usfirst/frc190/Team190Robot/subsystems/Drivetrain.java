@@ -84,7 +84,8 @@ public class Drivetrain extends Subsystem implements PIDOutput {
     }
 
     /**
-     * Set the drivetrain to use PID to turn to the specified angle
+     * Set the drivetrain to use PID to turn to the specified angular distance
+     * from our current position.
      * This will disable manual control of the wheels
      * @param degrees The angle to attempt to turn to
      */
@@ -94,7 +95,7 @@ public class Drivetrain extends Subsystem implements PIDOutput {
     }
 
     /**
-     * Tells whether the robot has turned to the specified angle
+     * Tells whether the robot has turned to the specified angle.
      * @return Whether we have reached the setpoint
      */
     public boolean hasFullyTurned() {
@@ -102,7 +103,7 @@ public class Drivetrain extends Subsystem implements PIDOutput {
     }
 
     /**
-     * Disables the PID and re-enables manual control
+     * Disables the PID and re-enables manual control.
      */
     public void stopTurning() {
         turningPID.disable();
