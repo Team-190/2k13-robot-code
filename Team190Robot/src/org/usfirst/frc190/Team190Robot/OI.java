@@ -26,20 +26,20 @@ public class OI {
     /*
      * CONSTANTS FOR OI INPUTS
      */
-    
+    //TODO: Need to find the actual values for these constants
     //climber oi
-    final private int NEXT_BTN;
-    final private int CANCEL_BTN;
-    final private int RESET_BTN;
-    final private int WAIT_FOR_USER_LED;
-    final private int AUTO_CLIMB_LED;
+    final private int NEXT_BTN = 0;
+    final private int CANCEL_BTN = 0;
+    final private int RESET_BTN = 0;
+    final private int WAIT_FOR_USER_LED = 0;
+    final private int AUTO_CLIMB_LED = 0;
     
     //man climb oi
-    final private int OSHA_UP_DOWN;
-    final private int OSHA_PIVOT_FORWARD;
-    final private int MGA_UP_DOWN;
-    final private int DUMPER_CONTROL;
-    final private int CLIMBER_CONTROLS_LED;
+    final private int OSHA_UP_DOWN = 0;
+    final private int OSHA_PIVOT_FORWARD = 0;
+    final private int MGA_UP_DOWN = 0;
+    final private int DUMPER_CONTROL = 0;
+    final private int CLIMBER_CONTROLS_LED = 0;
     
     
     

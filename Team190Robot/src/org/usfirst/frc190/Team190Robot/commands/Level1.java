@@ -11,7 +11,6 @@
 
 package org.usfirst.frc190.Team190Robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc190.Team190Robot.Robot;
 
 /**
  *

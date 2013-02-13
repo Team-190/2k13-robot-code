@@ -4,9 +4,7 @@
  */
 package org.usfirst.frc190.Team190Robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc190.Team190Robot.Robot;
 
 public class ReadyForClimb extends CommandGroup{
     
