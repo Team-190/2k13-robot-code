@@ -13,7 +13,7 @@ package org.usfirst.frc190.Team190Robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-// TODO: Implement
+// TODO: Implement.  Needs coordination between OSHA and Dumper
 
 /**
  *

@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc190.Team190Robot.RobotMap;
-import org.usfirst.frc190.Team190Robot.commands.*;
 import org.usfirst.frc190.Team190Robot.misc.VexEncoder;
 
 /**
@@ -96,5 +95,13 @@ public class Dumper extends Subsystem {
      */
     public void setElbow(double pos){
         elbowPID.setSetpoint(pos);
+    }
+    
+    /**
+     * Stops all movement of the subsystem
+     */
+    public void stopMovement(){
+        bucketPID.setSetpoint(bucketEncoder.getPosition());
+        elbowPID.setSetpoint(elbowPot.getAverageValue());
     }
 }

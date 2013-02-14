@@ -23,21 +23,17 @@ public class Shooter extends Subsystem {
     private SpeedController wheelVictors = new Victor(RobotMap.SHOOTER_WHEEL_VICTOR);
     private SpeedController pitchVictor = new Victor(RobotMap.SHOOTER_PITCH_VICTOR);
     private Solenoid feederSolenoid = new Solenoid(RobotMap.SHOOTER_FEEDER_SOLENDOID);
-    
     // Sensors
     private DigitalInput wheelInput = new DigitalInput(RobotMap.SHOOTER_WHEEL_ENCODER);
     private Encoder wheelEncoder = new Encoder(wheelInput, wheelInput, false, CounterBase.EncodingType.k1X);
     private Encoder pitchEncoder = new Encoder(RobotMap.SHOOTER_PITCH_ENCODER_A, RobotMap.SHOOTER_PITCH_ENCODER_B);
     private DigitalInput pitchLowerLimit = new DigitalInput(RobotMap.SHOOTER_LOWER_LIMIT);
-    
     // PID Controllers
     private PIDController wheelPID = new PIDController(kP_WHEEL, kI_WHEEL, kD_WHEEL, kF_WHEEL, wheelEncoder, wheelVictors);
     private PIDController pitchPID = new PIDController(kP_PIVOT, kI_PIVOT, kD_PIVOT, pitchEncoder, pitchVictor);
-    
     // Feeder Positions
     public static final boolean FEEDER_FEED = true;
     public static final boolean FEEDER_RETRACT = false;
-    
     // PID Constants
     // TODO: Tune PID Loops
     public static final double kP_WHEEL = 1.0;
@@ -47,9 +43,13 @@ public class Shooter extends Subsystem {
     public static final double kP_PIVOT = 0;
     public static final double kI_PIVOT = 0;
     public static final double kD_PIVOT = 0;
-    
     // Angle Constants
     // TODO: Find as many angle constants as possible
+    
+    // Current status of the shooter.  If this is false, the shooter should
+    // not be enabled.  Starts at false, but will immediately mirror the driver
+    // OI setting
+    private boolean enabled = false;
 
     public Shooter() {
         // Set up the encoders
@@ -64,8 +64,8 @@ public class Shooter extends Subsystem {
         wheelPID.setContinuous(false);
         wheelPID.setAbsoluteTolerance(0.2);
         wheelPID.setOutputRange(-1.0, 1.0);
-        pitchPID.setContinuous(false); 
-        pitchPID.setAbsoluteTolerance(0.2); 
+        pitchPID.setContinuous(false);
+        pitchPID.setAbsoluteTolerance(0.2);
         pitchPID.setOutputRange(-1.0, 1.0);
 
         // Add the components to LiveWindow
@@ -87,6 +87,7 @@ public class Shooter extends Subsystem {
 
     /**
      * Directly sets the pitch of the shooter.
+     *
      * @param angle The angle to set the pitch to
      */
     public void setPitch(double angle) {
@@ -95,16 +96,21 @@ public class Shooter extends Subsystem {
     }
 
     /**
-     * Directly sets the speed of the wheels.
+     * Directly sets the speed of the wheels.  If the shooter is disabled
+     * on the OI, this will not set a speed
+     *
      * @param speed The speed to drive the wheels at
      */
     public void setSpeed(double speed) {
-        wheelPID.setSetpoint(speed);
-        wheelPID.enable();
+        if (enabled) {
+            wheelPID.setSetpoint(speed);
+            wheelPID.enable();
+        }
     }
 
     /**
      * Tells if the pitch and speed are correct
+     *
      * @return Whether the shooter is ready to shoot
      */
     public boolean isReadyToShoot() {
@@ -113,10 +119,28 @@ public class Shooter extends Subsystem {
 
     /**
      * Converts a given pitch to rotations of the motor
+     *
      * @param pitch The pitch to convert
      * @return The rotations to turn
      */
     private double convertPitchToRotations(double pitch) {
         return pitch; // TODO: Actually convert
+    }
+    
+    /**
+     * Enables the shooter wheels
+     */
+    private void enable(){
+        enabled = true;
+    }
+    
+    /**
+     * Disables the shooter wheel.  Nothing will affect the speed of the
+     * shooter until the wheel is re-enabled
+     */
+    private void disable(){
+        enabled = false;
+        wheelPID.disable();
+        wheelVictors.set(0);
     }
 }

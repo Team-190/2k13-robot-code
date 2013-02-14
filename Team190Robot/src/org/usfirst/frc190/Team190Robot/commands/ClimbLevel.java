@@ -16,30 +16,31 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *  We are currently hanging on the a rung by the MGA's.
  *  Everything else is stored, and the OSHA is pivoted backwards
  */
-public class Level2 extends CommandGroup {
+public class ClimbLevel extends CommandGroup {
     
-    public  Level2() {
-        //extend our long arm
+    public  ClimbLevel() {
+        //extend the OSHA
         addSequential(new OSHAExtend());
         //pivot forward
         addSequential(new OSHAPivotForward());
         //retract the OSHA
-        // TODO: Make this parallel
-        addSequential(new OSHARetract());
+        addParallel(new OSHARetract());
         //wait for user input
-        // TODO: Change this to wait for gyro input
-        addSequential(new WaitForNext());
+        addSequential(new WaitForSwing());
         //raise the MGAs
         addSequential(new MGAExtend());
-        // TODO: Wait for MGA input here
-        // TODO: In parallel, stop the OSHA
+        // Wait until the MGA's have latched onto the next level
+        addSequential(new WaitForMGAs());
+        // Stop the OSHA's in parallel with retracting the MGA
+        addParallel(new OSHAStop());
         //retract the MGAs
         addSequential(new MGARetract());
-        // TODO: Pivot OSHA
-        //we now the the OSHA and MGAs on the second rung
-        // TODO: Make this part of AutoClimb
-        //climb to level three
-        addSequential(new Level3());
-        
+        // Pivot the OSHA back for the next level
+        addSequential(new OSHAPivotBack());
+        /*
+         * We now one level up from where we started
+         * The MGA's are retracted, the OSHA is pivoted back and down,
+         * and the rest of the subsystems are stored
+         */
     }
 }

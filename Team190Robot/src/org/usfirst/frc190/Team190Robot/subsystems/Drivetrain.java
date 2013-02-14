@@ -30,14 +30,17 @@ public class Drivetrain extends Subsystem implements PIDOutput {
     private Gyro swingGyro = new Gyro(RobotMap.DRIVETRAIN_GYRO_SWING);
     private PIDController turningPID;
     
-    // TODO: PID Constants and Tuning
+    // TODO: PID Tuning
+    private final double kP = 0.0;
+    private final double kI = 0.0;
+    private final double kD = 0.0;
 
     public Drivetrain() {
         super();
 
         // TODO: need to tune PID loop. WARNING: MAY BE DANGEROUS
         // TODO: Determine max output, tolerance
-        turningPID = new PIDController(0.1, 0, 0, targetingGyro, this);
+        turningPID = new PIDController(kP, kI, kD, targetingGyro, this);
         turningPID.setAbsoluteTolerance(0.25);
 
         // Setup for the robotDrive object
@@ -120,5 +123,13 @@ public class Drivetrain extends Subsystem implements PIDOutput {
      */
     public void pidWrite(double d) {
         tankDrive(-d, d);
+    }
+    
+    /**
+     * Returns the current angle of the swing gyro
+     * @return The swing gyro angle
+     */
+    public double curSwing(){
+        return swingGyro.getAngle();
     }
 }

@@ -8,39 +8,32 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc190.Team190Robot.Robot;
 
 /**
- * Drives to the level 1 bar until either both MGA's have detected the bar,
- * or the command times out
+ *
  * @author Fred
  */
-public class DrivetoLevel1 extends Command {
+public class WaitForMGAs extends Command {
     
-    public DrivetoLevel1() {
-        requires(Robot.drivetrain);
+    public WaitForMGAs(){
         requires(Robot.mGA);
         
-        // TODO: Need to find this
-        setTimeout(2);
+        // TODO: Find correct timeout
+        setTimeout(3);
     }
-
+    
     protected void initialize() {
-        Robot.drivetrain.tankDrive(1, 1);
     }
 
     protected void execute() {
     }
 
     protected boolean isFinished() {
-        // We are done when either the MGA's say that we are on the bar, or
-        // the command times out
         return Robot.mGA.onBar() || isTimedOut();
     }
 
     protected void end() {
-        Robot.drivetrain.tankDrive(0, 0);
     }
 
     protected void interrupted() {
-        end();
     }
     
 }

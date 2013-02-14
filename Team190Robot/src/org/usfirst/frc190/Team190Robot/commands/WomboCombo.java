@@ -6,30 +6,19 @@ package org.usfirst.frc190.Team190Robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-// TODO: Implement
-
 /**
- *
- * @author Demo
+ * Raises the dumper, waits for the user to confirm the discs have scored, 
+ * then stores the dumper
+ * @author Fred
  */
 public class WomboCombo extends CommandGroup {
     
     public WomboCombo() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+        // Score the colored discs
+        addSequential(new DumperScore());
+        // Wait for the user to confirm the discs have scored
+        addSequential(new WaitForNext());
+        // Store the dumper again
+        addSequential(new DumperStore());
     }
 }
