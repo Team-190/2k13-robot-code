@@ -1,27 +1,26 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package org.usfirst.frc190.Team190Robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc190.Team190Robot.Robot;
-import org.usfirst.frc190.Team190Robot.RobotMap;
 
 /**
  *
+ * @author Demo
  */
-public class  OSHAPivotBack extends Command {
-
-    public OSHAPivotBack() {
-        requires(Robot.oSHA);
-        this.setTimeout(3.0);
+// TODO: implement this
+// this needs to put the dumper in the position such that it will allow the OSHA to clear it
+public class DumperClear extends Command{
+    
+    public DumperClear() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        
-        // these two aren't sequential, but Ken says that's a-okay
-        //start running the dumper cmd
-        (new DumperClear()).start();
-        //now move the OSHA
-        RobotMap.oSHAPivotSolenoid.set(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -30,7 +29,7 @@ public class  OSHAPivotBack extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return this.isTimedOut();
+        return false;
     }
 
     // Called once after isFinished returns true

@@ -26,6 +26,8 @@ public class Level2 extends CommandGroup {
         addSequential(new OSHARetract());
         //wait for user input
         addSequential(new WaitForNext());
+        //TODO: wait for the gyro
+        //TODO: check the state transitions. get this correct
         //raise the MGAs
         addSequential(new MGAExtend());
         //retract the MGAs

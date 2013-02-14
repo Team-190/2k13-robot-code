@@ -24,7 +24,7 @@ public class Level1 extends CommandGroup {
         
         //extend the MGAs
         addSequential(new MGAExtend());
-        //TODO: bumper bumpers engage
+        //bumper bumpers engage
         
         //drive forward toward the bar
         addSequential(new DrivetoLevel1());
