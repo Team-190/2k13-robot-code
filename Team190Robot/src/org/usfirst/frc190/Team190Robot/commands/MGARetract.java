@@ -27,7 +27,7 @@ public class  MGARetract extends Command {
 	
         requires(Robot.mGA);
         
-        //todo: this process needs to be timed
+        //todo: this process needs to be timed, constanted
         this.setTimeout(3.0);
         
     }

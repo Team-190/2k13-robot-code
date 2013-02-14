@@ -62,8 +62,7 @@ public class RobotMap {
     public static final int DUMPER_ELBOW_VICTOR = 7;
     //Sensors
     // TODO: Switch to I2C
-    public static final int DUMPER_BUCKET_ENCODER_A = 0;
-    public static final int DUMPER_BUCKET_ENCODER_B = 0;
+    public static final int DUMPER_BUCKET_ENCODER = 1;
     public static final int DUMPER_ELBOW_POT = 3;
         
 // Compressor

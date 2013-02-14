@@ -13,7 +13,8 @@ package org.usfirst.frc190.Team190Robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ *  We are currently hanging on the a rung by the MGA's.
+ *  Everything else is stored, and the OSHA is pivoted backwards
  */
 public class Level2 extends CommandGroup {
     
@@ -23,16 +24,20 @@ public class Level2 extends CommandGroup {
         //pivot forward
         addSequential(new OSHAPivotForward());
         //retract the OSHA
+        // TODO: Make this parallel
         addSequential(new OSHARetract());
         //wait for user input
+        // TODO: Change this to wait for gyro input
         addSequential(new WaitForNext());
         //raise the MGAs
         addSequential(new MGAExtend());
+        // TODO: Wait for MGA input here
+        // TODO: In parallel, stop the OSHA
         //retract the MGAs
         addSequential(new MGARetract());
+        // TODO: Pivot OSHA
         //we now the the OSHA and MGAs on the second rung
-        //wait for the user to hit next
-        addSequential(new WaitForNext());
+        // TODO: Make this part of AutoClimb
         //climb to level three
         addSequential(new Level3());
         

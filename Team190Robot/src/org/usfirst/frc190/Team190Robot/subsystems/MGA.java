@@ -27,13 +27,13 @@ public class MGA extends Subsystem {
     private Solenoid armSolenoid = new Solenoid(RobotMap.MGA_SOLENDOID);
     
     // Sensors
+    // TODO: Figure out final position of the limit switches
     private DigitalInput leftArmLimit = new DigitalInput(RobotMap.MGA_LEFT_LIMIT);
     private DigitalInput rightArmLimit = new DigitalInput(RobotMap.MGA_RIGHT_LIMIT);
 
-    // TODO: Find the correct values for these
     // Constants for the MGA's positions
-    public static final boolean MGA_UP = false;
-    public static final boolean MGA_DOWN = true;
+    public static final boolean MGA_UP = true;
+    public static final boolean MGA_DOWN = false;
     
     public MGA(){
         // Add Components to LiveWindow
@@ -46,7 +46,7 @@ public class MGA extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-        setDefaultCommand(new MGADoNothing());
+        // No default command
     }
     
     /**

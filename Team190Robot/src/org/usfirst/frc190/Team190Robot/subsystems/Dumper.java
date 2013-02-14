@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc190.Team190Robot.RobotMap;
 import org.usfirst.frc190.Team190Robot.commands.*;
+import org.usfirst.frc190.Team190Robot.misc.VexEncoder;
 
 /**
  *
@@ -25,8 +26,7 @@ public class Dumper extends Subsystem {
     private SpeedController elbowMotor = new Victor(RobotMap.DUMPER_ELBOW_VICTOR);
     
     // Sensors
-    // TODO: Change this to Alex's Vex Encoder
-    private Encoder bucketEncoder = new Encoder(RobotMap.DUMPER_BUCKET_ENCODER_A, RobotMap.DUMPER_BUCKET_ENCODER_B);
+    private VexEncoder bucketEncoder = new VexEncoder(RobotMap.DUMPER_BUCKET_ENCODER);
     private AnalogChannel elbowPot = new AnalogChannel(RobotMap.DUMPER_ELBOW_POT);
     
     // PID Controllers
@@ -34,6 +34,7 @@ public class Dumper extends Subsystem {
     private PIDController elbowPID = new PIDController(kP_ELBOW, kI_ELBOW, kD_ELBOW, elbowPot, elbowMotor);
 
     // PID Constants
+    // TODO: Tune Constants
     private static final double kP_BUCKET = 1.0;
     private static final double kI_BUCKET = 0;
     private static final double kD_BUCKET = 0;
@@ -53,10 +54,6 @@ public class Dumper extends Subsystem {
     public static final double WOMBO_PIVOT = 0;
     
     public Dumper(){
-        // Set up sensors
-        bucketEncoder.setDistancePerPulse(1.0);
-        bucketEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
-        bucketEncoder.start();
         
         // Set up PID Controllers
         bucketPID.setContinuous(false); 
@@ -68,7 +65,6 @@ public class Dumper extends Subsystem {
         
         // Add components to the live window
         LiveWindow.addActuator("Dumper", "Bucket Motor", (Victor) bucketMotor);
-        LiveWindow.addSensor("Dumper", "Bucket Encoder", bucketEncoder);
         LiveWindow.addActuator("Dumper", "Bucket PID", bucketPID);
         LiveWindow.addActuator("Dumper", "Elbow Motor", (Victor) elbowMotor);
         LiveWindow.addSensor("Dumper", "Elbow Pot", elbowPot);
@@ -78,7 +74,7 @@ public class Dumper extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public void initDefaultCommand() {
-        setDefaultCommand(new DumperDoNothing());
+        // No default command
     }
     
     // TODO: Determine if this is enough to control the elbow and pivot, or if

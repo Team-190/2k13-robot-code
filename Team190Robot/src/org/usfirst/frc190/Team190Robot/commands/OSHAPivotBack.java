@@ -16,6 +16,8 @@ import org.usfirst.frc190.Team190Robot.Robot;
 import org.usfirst.frc190.Team190Robot.RobotMap;
 import org.usfirst.frc190.Team190Robot.subsystems.OSHA;
 
+// TODO: Look at dumper interferences
+
 /**
  *
  */

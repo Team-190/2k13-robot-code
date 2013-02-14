@@ -31,18 +31,19 @@ public class Shooter extends Subsystem {
     private DigitalInput pitchLowerLimit = new DigitalInput(RobotMap.SHOOTER_LOWER_LIMIT);
     
     // PID Controllers
-    private PIDController wheelPID = new PIDController(kP_WHEEL, kI_WHEEL, kD_WHEEL, wheelEncoder, wheelVictors);
+    private PIDController wheelPID = new PIDController(kP_WHEEL, kI_WHEEL, kD_WHEEL, kF_WHEEL, wheelEncoder, wheelVictors);
     private PIDController pitchPID = new PIDController(kP_PIVOT, kI_PIVOT, kD_PIVOT, pitchEncoder, pitchVictor);
     
     // Feeder Positions
-    public static final boolean FEEDER_FEED = false;
-    public static final boolean FEEDER_RETRACT = true;
+    public static final boolean FEEDER_FEED = true;
+    public static final boolean FEEDER_RETRACT = false;
     
     // PID Constants
-    // TODO: Tune PID Loop
+    // TODO: Tune PID Loops
     public static final double kP_WHEEL = 1.0;
     public static final double kI_WHEEL = 0;
     public static final double kD_WHEEL = 0;
+    public static final double kF_WHEEL = 0;
     public static final double kP_PIVOT = 0;
     public static final double kI_PIVOT = 0;
     public static final double kD_PIVOT = 0;

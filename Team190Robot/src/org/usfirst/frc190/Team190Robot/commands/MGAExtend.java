@@ -28,6 +28,7 @@ public class  MGAExtend extends Command {
         
         
         //assuming it needs to run for this long
+        // TODO: Find this time
         this.setTimeout(3.0);
     }
     // Called just before this Command runs the first time

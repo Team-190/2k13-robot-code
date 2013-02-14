@@ -12,8 +12,11 @@
 package org.usfirst.frc190.Team190Robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+// TODO: Remove this command
+
 /**
- *
+ * At this point, the MGA's are on level 2, and the OSHA is a few inches
+ * off the bar
  */
 public class Level3 extends CommandGroup {
     
