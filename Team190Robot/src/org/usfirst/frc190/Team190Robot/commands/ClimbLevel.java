@@ -12,6 +12,8 @@
 package org.usfirst.frc190.Team190Robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+// TODO: Handle the timeouts
+
 /**
  *  We are currently hanging on the a rung by the MGA's.
  *  Everything else is stored, and the OSHA is pivoted backwards
