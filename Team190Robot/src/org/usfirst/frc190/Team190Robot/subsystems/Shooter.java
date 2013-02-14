@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc190.Team190Robot.RobotMap;
+import org.usfirst.frc190.Team190Robot.misc.SingleChannelEncoder;
 
 /**
  *
@@ -24,8 +25,7 @@ public class Shooter extends Subsystem {
     private SpeedController pitchVictor = new Victor(RobotMap.SHOOTER_PITCH_VICTOR);
     private Solenoid feederSolenoid = new Solenoid(RobotMap.SHOOTER_FEEDER_SOLENDOID);
     // Sensors
-    private DigitalInput wheelInput = new DigitalInput(RobotMap.SHOOTER_WHEEL_ENCODER);
-    private Encoder wheelEncoder = new Encoder(wheelInput, wheelInput, false, CounterBase.EncodingType.k1X);
+    private SingleChannelEncoder wheelEncoder = new SingleChannelEncoder(RobotMap.SHOOTER_WHEEL_ENCODER);
     private Encoder pitchEncoder = new Encoder(RobotMap.SHOOTER_PITCH_ENCODER_A, RobotMap.SHOOTER_PITCH_ENCODER_B);
     private DigitalInput pitchLowerLimit = new DigitalInput(RobotMap.SHOOTER_LOWER_LIMIT);
     // PID Controllers
@@ -53,8 +53,7 @@ public class Shooter extends Subsystem {
 
     public Shooter() {
         // Set up the encoders
-        wheelEncoder.setDistancePerPulse(1.0);
-        wheelEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
+        wheelEncoder.countsPerRevolution(1);
         wheelEncoder.start();
         pitchEncoder.setDistancePerPulse(1.0);
         pitchEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
