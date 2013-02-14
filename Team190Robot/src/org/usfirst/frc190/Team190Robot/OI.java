@@ -17,6 +17,10 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
 
+// TODO: Create the Analog button classes
+// TODO: Assign buttons to commands
+// TODO: Write Next Button Class
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -26,20 +30,20 @@ public class OI {
     /*
      * CONSTANTS FOR OI INPUTS
      */
-    
+    //TODO: Need to find the actual values for these constants
     //climber oi
-    final private int NEXT_BTN;
-    final private int CANCEL_BTN;
-    final private int RESET_BTN;
-    final private int WAIT_FOR_USER_LED;
-    final private int AUTO_CLIMB_LED;
+    final private int NEXT_BTN = 0;
+    final private int CANCEL_BTN = 0;
+    final private int RESET_BTN = 0;
+    final private int WAIT_FOR_USER_LED = 0;
+    final private int AUTO_CLIMB_LED = 0;
     
     //man climb oi
-    final private int OSHA_UP_DOWN;
-    final private int OSHA_PIVOT_FORWARD;
-    final private int MGA_UP_DOWN;
-    final private int DUMPER_CONTROL;
-    final private int CLIMBER_CONTROLS_LED;
+    final private int OSHA_UP_DOWN = 0;
+    final private int OSHA_PIVOT_FORWARD = 0;
+    final private int MGA_UP_DOWN = 0;
+    final private int DUMPER_CONTROL = 0;
+    final private int CLIMBER_CONTROLS_LED = 0;
     
     
     
@@ -105,8 +109,6 @@ public class OI {
 
         SmartDashboard.putData("MGA Retract", new MGARetract());
 
-        SmartDashboard.putData("MGA Do Nothing", new MGADoNothing());
-
         SmartDashboard.putData("OSHA Pivot Forward", new OSHAPivotForward());
 
         SmartDashboard.putData("OSHA Pivot Back", new OSHAPivotBack());
@@ -115,11 +117,7 @@ public class OI {
 
         SmartDashboard.putData("OSHA Retract", new OSHARetract());
 
-        SmartDashboard.putData("OSHA Do Nothing", new OSHADoNothing());
-
         SmartDashboard.putData("Dumper Collect", new DumperCollect());
-
-        SmartDashboard.putData("Dumper Do Nothing", new DumperDoNothing());
 
         SmartDashboard.putData("Dumper Store", new DumperStore());
 
@@ -130,8 +128,6 @@ public class OI {
         SmartDashboard.putData("Level 2", new Level2());
 
         SmartDashboard.putData("Drive to Level 1", new DrivetoLevel1());
-
-        SmartDashboard.putData("Lift Off Bar", new LiftOffBar());
 
         SmartDashboard.putData("Level 3", new Level3());
 
