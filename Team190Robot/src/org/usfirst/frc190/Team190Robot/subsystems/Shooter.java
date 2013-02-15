@@ -124,9 +124,10 @@ public class Shooter extends Subsystem {
      */
     private double convertPitchToRotations(double pitch) {
         // TODO: find alpha
-        double alpha = 0; // radians
+        // TODO: figure out starting length and adjust accordingly
+        double alpha = 1.734; // radians
         double lead = 0.707; //inches per rotation
-        double theta = pitch - alpha; // radians
+        double theta = alpha - pitch; // radians
         double length = Math.sqrt(654.62 - 652.93*Math.cos(theta)); //inches-law of cosines
         return length/lead; // rotations
     }
