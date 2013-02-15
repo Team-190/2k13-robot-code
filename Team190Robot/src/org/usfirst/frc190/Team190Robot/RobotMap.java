@@ -19,20 +19,20 @@ package org.usfirst.frc190.Team190Robot;
  */
 public class RobotMap {
 
-    // TODO: Allocate final ports
+    // TODO: Allocate analog ports
 // Drivetrain Constants    
     // Actuators
-    public static final int DRIVETRAIN_LEFT_VICTOR = 1;
-    public static final int DRIVETRAIN_RIGHT_VICTOR = 2;
+    public static final int DRIVETRAIN_LEFT_VICTOR = 9;
+    public static final int DRIVETRAIN_RIGHT_VICTOR = 8;
     // Sensors
     public static final int DRIVETRAIN_GYRO_TARGETING = 1;
     public static final int DRIVETRAIN_GYRO_SWING = 2;
     
 // Shooter Constants
     // Actuators
-    public static final int SHOOTER_WHEEL_VICTOR = 3;
-    public static final int SHOOTER_PITCH_VICTOR = 4;
-    public static final int SHOOTER_FEEDER_SOLENDOID = 1;
+    public static final int SHOOTER_WHEEL_VICTOR = 2;
+    public static final int SHOOTER_PITCH_VICTOR = 1;
+    public static final int SHOOTER_FEEDER_SOLENDOID = 4;
     // Sensors
     public static final int SHOOTER_WHEEL_ENCODER = 1;
     public static final int SHOOTER_PITCH_ENCODER_A = 2;
@@ -41,16 +41,16 @@ public class RobotMap {
     
 // MGA's
     // Actuators
-    public static final int MGA_SOLENDOID = 2;
+    public static final int MGA_SOLENDOID = 1;
     //Sensors
     public static final int MGA_LEFT_LIMIT = 5;
     public static final int MGA_RIGHT_LIMIT = 6;
     
 // OSHA
     // Actuators
-    public static final int OSHA_PIVOT_SOLENOID = 3;
-    public static final int OSHA_EXTENSION_SOLENOID = 4;
-    public static final int OSHA_WINCH_VICTOR = 5;
+    public static final int OSHA_PIVOT_SOLENOID = 2;
+    public static final int OSHA_EXTENSION_SOLENOID = 3;
+    public static final int OSHA_WINCH_VICTOR = 6;
     // Sensors
     public static final int OSHA_UPPER_LIMIT = 7;
     public static final int OSHA_LOWER_LIMIT = 8;
@@ -58,13 +58,13 @@ public class RobotMap {
     
 // Dumper
     // Actuators
-    public static final int DUMPER_BUCKET_VICTOR = 6;
-    public static final int DUMPER_ELBOW_VICTOR = 7;
+    public static final int DUMPER_BUCKET_VICTOR = 4;
+    public static final int DUMPER_ELBOW_VICTOR = 5;
     //Sensors
     public static final int DUMPER_BUCKET_ENCODER = 1;
     public static final int DUMPER_ELBOW_POT = 3;
         
 // Compressor
     public static final int COMPRESSOR_RELAY = 1;
-    public static final int COMPRESSOR_SWITCH = 10;
+    public static final int COMPRESSOR_SWITCH = 14;
 }
