@@ -27,7 +27,7 @@ public class  OSHAExtend extends Command {
         requires(Robot.oSHA);
         
         // TODO: Need to time this process, constanted
-        this.setTimeout(2.0);
+        this.setTimeout(10.0);
     }
 
     // Called just before this Command runs the first time
@@ -37,17 +37,33 @@ public class  OSHAExtend extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.oSHA.driveOSHA(1.0);
+        Robot.oSHA.driveOSHA(Robot.oSHA.OSHAExtendSpeed, true);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return this.isTimedOut() || Robot.oSHA.getUpperLimit();
+        if (this.isTimedOut())
+        {
+            System.out.println("OSHA Extend exited with Timeout");
+            return true;
+        }
+        if (Robot.oSHA.getUpperLimit())
+        {
+            System.out.println("OSHA Extend exited with Limit");
+            return true;
+        }
+        /*if (!Robot.oSHA.isTensioned())
+        {
+            System.out.println("OSHA Extend exited with No Tension");
+            return true;
+        }*/
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.oSHA.driveOSHA(0);
+        
+        Robot.oSHA.driveOSHA(0, false);
     }
 
     // Called when another command which requires one or more of the same

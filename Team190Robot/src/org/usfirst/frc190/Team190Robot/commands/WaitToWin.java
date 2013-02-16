@@ -28,7 +28,7 @@ public class WaitToWin extends Command{
         // Stop all movement we can
         Robot.drivetrain.tankDrive(0, 0);
         Robot.dumper.stopMovement();
-        Robot.oSHA.driveOSHA(0);
+        Robot.oSHA.driveOSHA(0, false);
         Robot.shooter.setSpeed(0);
     }
 

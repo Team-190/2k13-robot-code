@@ -30,6 +30,9 @@ public class Drivetrain extends Subsystem implements PIDOutput {
     private Gyro swingGyro = new Gyro(RobotMap.DRIVETRAIN_GYRO_SWING);
     private PIDController turningPID;
     
+    //Drive speeds for level 1 climb
+    public static final double DRIVE_TO_LEVEL1_SPEED = 0.25;
+    
     // TODO: PID Tuning
     private final double kP = 0.0;
     private final double kI = 0.0;

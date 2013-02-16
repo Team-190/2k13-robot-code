@@ -30,7 +30,7 @@ public class ClimbLevel extends CommandGroup {
         //wait for user input
         addSequential(new WaitForSwing());
         //raise the MGAs
-        addSequential(new MGAExtend());
+        addParallel(new MGAExtend());
         // Wait until the MGA's have latched onto the next level
         addSequential(new WaitForMGAs());
         // Stop the OSHA's in parallel with retracting the MGA

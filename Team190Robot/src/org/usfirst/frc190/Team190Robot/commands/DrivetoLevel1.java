@@ -23,10 +23,18 @@ public class DrivetoLevel1 extends Command {
     }
 
     protected void initialize() {
-        Robot.drivetrain.tankDrive(1, 1);
+       
     }
 
     protected void execute() {
+        double left = Robot.drivetrain.DRIVE_TO_LEVEL1_SPEED;
+        double right = Robot.drivetrain.DRIVE_TO_LEVEL1_SPEED;
+        if (Robot.mGA.rightOnBar())
+            right = 0;
+        if (Robot.mGA.leftOnBar())
+            left = 0;
+            
+        Robot.drivetrain.tankDrive(left, right);
     }
 
     protected boolean isFinished() {

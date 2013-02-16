@@ -19,7 +19,7 @@ public class OSHAStop extends Command {
 
     protected void initialize() {
         // Stop the OSHA
-        Robot.oSHA.driveOSHA(0);
+        Robot.oSHA.driveOSHA(0, false);
     }
 
     protected void execute() {

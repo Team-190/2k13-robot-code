@@ -12,6 +12,7 @@ package org.usfirst.frc190.Team190Robot.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc190.Team190Robot.Robot;
 import org.usfirst.frc190.Team190Robot.RobotMap;
 import org.usfirst.frc190.Team190Robot.commands.*;
@@ -38,8 +39,11 @@ public class OSHA extends Subsystem {
     public static final boolean EXTENSION_ON = false;
     public static final boolean EXTENSION_OFF = true;
     
-    //Holds a boolean indicating whether we're currently tensioned. Set by the checkTension command
-    private boolean tensioned;
+    //OSHA Speeds
+    public static final double OSHAFreeRetractSpeed = -0.25;
+    public static final double OSHALoadRetractSpeed = -1;
+    public static final double OSHAExtendSpeed = 0.25;
+
 
     public OSHA() {
         // Put Components on Live Window
@@ -49,7 +53,8 @@ public class OSHA extends Subsystem {
         LiveWindow.addSensor("OSHA", "Winch Upper Limit", winchUpperLimit);
         LiveWindow.addSensor("OSHA", "Winch Lower Limit", winchLowerLimit);
         LiveWindow.addSensor("OSHA", "Tensiometer", tensiometer);
-
+        
+        //SmartDashboard.putData("Tensiometer", tensiometer);
         // Start by firing the extension and setting the status to true
         extensionSolenoid.set(EXTENSION_ON);
         pivotSolenoid.set(OSHA_FORWARD);
@@ -66,25 +71,23 @@ public class OSHA extends Subsystem {
      *
      * @param speed The speed to drive the OSHA at
      */
-    public void driveOSHA(double speed) {
+    public void driveOSHA(double speed, boolean stopOnNoTension) {
+        boolean extension = false;
         // Check to see which direction we are trying to move       
-        // TODO: Make sure this is the correct direction
         //Actually checking for tension
-        if(!this.tensiometer.get()){
+        if(this.isTensioned() || !stopOnNoTension){
             if (speed < 0) {
                 // Check to make sure we don't go past the bottom limit.
+           
                 // If we do, set the speed to 0, and make sure the extension is fired
                 if (winchLowerLimit.get()) {
                     speed = 0;
-                    extensionSolenoid.set(EXTENSION_ON);
-                    new OSHAStop().start();
+                    extension = EXTENSION_ON;
                 } else {
                     // If we are trying to lower the OSHA, make sure that the 
                     // extension is set to extension down
-                    extensionSolenoid.set(EXTENSION_OFF);
+                    extension = EXTENSION_OFF;
                 }
-                System.out.println("Speed set to " + speed);
-                winchVictor.set(speed);
             } else {
                 // Check to make sure we don't go past the upper limit.
                 // If we do, set the speed to 0 and let the next check make sure
@@ -92,16 +95,21 @@ public class OSHA extends Subsystem {
                 if (winchUpperLimit.get()) {
                     speed = 0;
                 }
-                System.out.println("Speed set to " + speed );
                 // We are trying to go up, so make sure that the extension is 
                 // set to extension up
                 extensionSolenoid.set(EXTENSION_ON);
-                winchVictor.set(speed);
+          
             }
         }else{
-            System.out.println("Tensiometer is ded");
-            winchVictor.set(0);
+            System.out.println("Tensiometer is dead");
+            extension = EXTENSION_ON;
+            speed = 0;
         }
+        
+        System.out.println("Speed set to " + speed);
+        System.out.println("Extension set to " + (extension ? "OFF" : "ON"));
+        winchVictor.set(speed);
+        extensionSolenoid.set(extension);
     }
 
     /**
@@ -122,10 +130,14 @@ public class OSHA extends Subsystem {
         return winchUpperLimit.get();
     }
     
-    public void checkTension(){
-        tensioned = !this.tensiometer.get();
-        if(!tensioned){
-            this.winchVictor.set(0);
+    private int untensionedCount = 0;
+    
+    public boolean isTensioned(){
+        if(!this.tensiometer.get()){
+            untensionedCount = 0;
+        }else{
+            untensionedCount++;
         }
+        return (untensionedCount < 10);
     }
 }

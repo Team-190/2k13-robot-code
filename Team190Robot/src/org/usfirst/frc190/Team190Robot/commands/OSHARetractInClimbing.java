@@ -37,17 +37,32 @@ public class  OSHARetractInClimbing extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.oSHA.driveOSHA(-0.25);
+        Robot.oSHA.driveOSHA(Robot.oSHA.OSHAFreeRetractSpeed, false);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return this.isTimedOut()/* || Robot.mGA.onBar()*/;
+        if (this.isTimedOut())
+        {
+            System.out.println("OSHA Retract exited with Timeout");
+            return true;
+        }
+        if (Robot.oSHA.getLowerLimit())
+        {
+            System.out.println("OSHA Retract exited with Limit");
+            return true;
+        }
+        if (!Robot.oSHA.isTensioned())
+        {
+            System.out.println("OSHA Retract exited with No Tension");
+            return true;
+        }
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.oSHA.driveOSHA(0);
+        Robot.oSHA.driveOSHA(0, false);
         if(Robot.oSHA.getLowerLimit() || this.isTimedOut()) //we hit the lower limit. Oh no!
             new WaitToWin().start();
     }

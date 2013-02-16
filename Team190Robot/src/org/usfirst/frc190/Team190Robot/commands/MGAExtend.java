@@ -29,7 +29,7 @@ public class  MGAExtend extends Command {
         
         //assuming it needs to run for this long
         // TODO: Find this time
-        this.setTimeout(3.0);
+        this.setTimeout(1.5);
     }
     // Called just before this Command runs the first time
     protected void initialize() {

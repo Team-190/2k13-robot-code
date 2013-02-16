@@ -18,11 +18,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Level1 extends CommandGroup {
     
     public  Level1() {
-
-        // Retract all equipment in preparation to climb
-        addSequential(new ReadyForClimb());
-        // Wait for user input
-        addSequential(new WaitForNext());
         
         //extend the MGAs
         addSequential(new MGAExtend());        
@@ -31,8 +26,6 @@ public class Level1 extends CommandGroup {
         
         //drive forward toward the bar
         addSequential(new DrivetoLevel1());
-        //wait for user to press next
-        addSequential(new WaitForNext());
         
         //pull up on the bar
         addSequential(new MGARetract());
