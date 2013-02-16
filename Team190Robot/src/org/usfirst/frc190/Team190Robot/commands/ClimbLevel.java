@@ -26,7 +26,7 @@ public class ClimbLevel extends CommandGroup {
         //pivot forward
         addSequential(new OSHAPivotForward());
         //retract the OSHA
-        addParallel(new OSHARetract());
+        addParallel(new OSHARetractInClimbing());
         //wait for user input
         addSequential(new WaitForSwing());
         //raise the MGAs

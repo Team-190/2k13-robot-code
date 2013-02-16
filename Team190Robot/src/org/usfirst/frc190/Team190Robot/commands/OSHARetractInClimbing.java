@@ -18,16 +18,16 @@ import org.usfirst.frc190.Team190Robot.RobotMap;
 /**
  *
  */
-public class  OSHAExtend extends Command {
+public class  OSHARetractInClimbing extends Command {
 
-    public OSHAExtend() {
+    public OSHARetractInClimbing() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 	
         requires(Robot.oSHA);
         
-        // TODO: Need to time this process, constanted
-        this.setTimeout(2.0);
+        // TODO: Time this process
+        this.setTimeout(4.0);
     }
 
     // Called just before this Command runs the first time
@@ -37,17 +37,19 @@ public class  OSHAExtend extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.oSHA.driveOSHA(1.0);
+        Robot.oSHA.driveOSHA(-0.25);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return this.isTimedOut() || Robot.oSHA.getUpperLimit();
+        return this.isTimedOut()/* || Robot.mGA.onBar()*/;
     }
 
     // Called once after isFinished returns true
     protected void end() {
         Robot.oSHA.driveOSHA(0);
+        if(Robot.oSHA.getLowerLimit() || this.isTimedOut()) //we hit the lower limit. Oh no!
+            new WaitToWin().start();
     }
 
     // Called when another command which requires one or more of the same
