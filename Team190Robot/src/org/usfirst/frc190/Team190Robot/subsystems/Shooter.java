@@ -119,11 +119,17 @@ public class Shooter extends Subsystem {
     /**
      * Converts a given pitch to rotations of the motor
      *
-     * @param pitch The pitch to convert
+     * @param pitch The pitch to convert in radians.
      * @return The rotations to turn
      */
     private double convertPitchToRotations(double pitch) {
-        return pitch; // TODO: Actually convert
+        // TODO: find alpha
+        // TODO: figure out starting length and adjust accordingly
+        double alpha = 1.734; // radians
+        double lead = 0.707; //inches per rotation
+        double theta = alpha - pitch; // radians
+        double length = Math.sqrt(654.62 - 652.93*Math.cos(theta)); //inches-law of cosines
+        return length/lead; // rotations
     }
     
     /**
