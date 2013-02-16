@@ -18,6 +18,9 @@ import org.usfirst.frc190.Team190Robot.commands.*;
 /**
  *
  */
+/*
+ * TODO: Add a command for the tensiometer to kill errything
+ */
 public class OSHA extends Subsystem {
 
     // Actuators

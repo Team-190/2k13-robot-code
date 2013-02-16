@@ -49,6 +49,8 @@ public class Drivetrain extends Subsystem implements PIDOutput {
         robotDrive.setSensitivity(0.5);
         robotDrive.setMaxOutput(1.0);
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+        
 
         // Sensor Setup
         targetingGyro.setSensitivity(0.007);

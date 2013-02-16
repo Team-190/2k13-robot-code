@@ -22,8 +22,8 @@ public class RobotMap {
     // TODO: Allocate analog ports
 // Drivetrain Constants    
     // Actuators
-    public static final int DRIVETRAIN_LEFT_VICTOR = 9;
-    public static final int DRIVETRAIN_RIGHT_VICTOR = 8;
+    public static final int DRIVETRAIN_LEFT_VICTOR = 8;
+    public static final int DRIVETRAIN_RIGHT_VICTOR = 7;
     // Sensors
     public static final int DRIVETRAIN_GYRO_TARGETING = 1;
     public static final int DRIVETRAIN_GYRO_SWING = 2;
@@ -34,17 +34,17 @@ public class RobotMap {
     public static final int SHOOTER_PITCH_VICTOR = 1;
     public static final int SHOOTER_FEEDER_SOLENDOID = 4;
     // Sensors
-    public static final int SHOOTER_WHEEL_ENCODER = 1;
-    public static final int SHOOTER_PITCH_ENCODER_A = 2;
-    public static final int SHOOTER_PITCH_ENCODER_B = 3;
-    public static final int SHOOTER_LOWER_LIMIT = 4;
+    public static final int SHOOTER_WHEEL_ENCODER = 4;
+    public static final int SHOOTER_PITCH_ENCODER_A = 12;
+    public static final int SHOOTER_PITCH_ENCODER_B = 6;
+    public static final int SHOOTER_LOWER_LIMIT = 7;
     
 // MGA's
     // Actuators
     public static final int MGA_SOLENDOID = 1;
     //Sensors
     public static final int MGA_LEFT_LIMIT = 5;
-    public static final int MGA_RIGHT_LIMIT = 6;
+    public static final int MGA_RIGHT_LIMIT = 4;
     
 // OSHA
     // Actuators
@@ -52,9 +52,9 @@ public class RobotMap {
     public static final int OSHA_EXTENSION_SOLENOID = 3;
     public static final int OSHA_WINCH_VICTOR = 6;
     // Sensors
-    public static final int OSHA_UPPER_LIMIT = 7;
-    public static final int OSHA_LOWER_LIMIT = 8;
-    public static final int OSHA_TENSIOMETER = 9;
+    public static final int OSHA_UPPER_LIMIT = 2;
+    public static final int OSHA_LOWER_LIMIT = 3;
+    public static final int OSHA_TENSIOMETER = 1;
     
 // Dumper
     // Actuators

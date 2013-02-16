@@ -66,6 +66,8 @@ public class Robot extends IterativeRobot {
         autonomousCommand = new AutonomousCommand();
         
         compressor.start();
+        
+       
     }
 
     public void autonomousInit() {

@@ -75,7 +75,6 @@ public class VexEncoder extends I2C implements PIDSource {
         byte[] buffer = {0, 0, 0, 0};
         boolean failed = read(POSITION_REGISTER, 4, buffer);
         if (failed) {
-            System.out.println("I2C Failure on encoder.");
             return 0;
         } // TODO: Add exception handling
         return ((buffer[0] << 8) & 0xFF00) | (buffer[1] & 0xFF)
