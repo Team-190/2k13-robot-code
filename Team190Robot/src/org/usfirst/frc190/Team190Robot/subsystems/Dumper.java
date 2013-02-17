@@ -29,8 +29,8 @@ public class Dumper extends Subsystem {
     private AnalogChannel elbowPot = new AnalogChannel(RobotMap.DUMPER_ELBOW_POT);
     
     // PID Controllers
-    private PIDController bucketPID = new PIDController(kP_BUCKET, kI_BUCKET, kD_BUCKET, bucketEncoder, bucketMotor);
-    private PIDController elbowPID = new PIDController(kP_ELBOW, kI_ELBOW, kD_ELBOW, elbowPot, elbowMotor);
+    public PIDController bucketPID = new PIDController(kP_BUCKET, kI_BUCKET, kD_BUCKET, bucketEncoder, bucketMotor);
+    public PIDController elbowPID = new PIDController(kP_ELBOW, kI_ELBOW, kD_ELBOW, elbowPot, elbowMotor);
 
     // PID Constants
     // TODO: Tune Constants
@@ -43,14 +43,17 @@ public class Dumper extends Subsystem {
     
     // Position Constants
     // TODO: Find these constants
-    public static final double FEEDER_SLOT_ELBOW = 0.0;
-    public static final double FEEDER_SLOT_PIVOT = 0.0;
-    public static final double STORE_ELBOW = 0;
-    public static final double STORE_PIVOT = 0;
-    public static final double CLEAR_ELBOW = 0;
-    public static final double CLEAR_PIVOT = 0;
-    public static final double WOMBO_ELBOW = 0;
-    public static final double WOMBO_PIVOT = 0;
+    public final double FEEDER_SLOT_ELBOW = 0.0;
+    public final double FEEDER_SLOT_WRIST = 0.0;
+    public final double STORE_ELBOW = 0;
+    public final double STORE_WRIST = 0;
+    public final double CLEAR_ELBOW = 0;
+    public final double CLEAR_WRIST = 0;
+    public final double WOMBO_ELBOW = 0;
+    public final double WOMBO_WRIST = 0;
+    
+    // we start off stored
+    private int state = 3;
     
     public Dumper(){
         
@@ -103,5 +106,42 @@ public class Dumper extends Subsystem {
     public void stopMovement(){
         bucketPID.setSetpoint(bucketEncoder.getPosition());
         elbowPID.setSetpoint(elbowPot.getAverageValue());
+        bucketPID.disable();
+        elbowPID.disable();
     }
+    public int getState() {
+        return state;
+    }
+    public void goClear(){
+        state = 0;
+        this.bucketPID.setSetpoint(CLEAR_WRIST);
+        this.elbowPID.setSetpoint(CLEAR_ELBOW);
+        this.bucketPID.enable();
+        this.elbowPID.enable();
+    }
+    public void goCollect(){
+        state = 1;
+        this.bucketPID.setSetpoint(FEEDER_SLOT_WRIST);
+        this.elbowPID.setSetpoint(FEEDER_SLOT_ELBOW);
+        this.bucketPID.enable();
+        this.elbowPID.enable();
+    }
+    public void goScore(){
+        state = 2;
+        this.bucketPID.setSetpoint(WOMBO_WRIST);
+        this.elbowPID.setSetpoint(WOMBO_ELBOW);
+        this.bucketPID.enable();
+        this.elbowPID.enable();
+    }
+    public void goStore(){
+        state = 3;
+        this.bucketPID.setSetpoint(STORE_WRIST);
+        this.elbowPID.setSetpoint(STORE_ELBOW);
+        this.bucketPID.enable();
+        this.elbowPID.enable();
+    }
+    public boolean isDone(){
+        return this.bucketPID.onTarget() && this.elbowPID.onTarget();
+    }
+    
 }

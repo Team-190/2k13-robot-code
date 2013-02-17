@@ -5,6 +5,7 @@
 package org.usfirst.frc190.Team190Robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc190.Team190Robot.Robot;
 
 /**
  *
@@ -17,10 +18,12 @@ public class DumperClear extends Command{
     public DumperClear() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        requires(Robot.dumper);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        Robot.dumper.goClear();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,11 +32,12 @@ public class DumperClear extends Command{
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.dumper.isDone();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.dumper.stopMovement();
     }
 
     // Called when another command which requires one or more of the same
