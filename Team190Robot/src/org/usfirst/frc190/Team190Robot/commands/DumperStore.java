@@ -13,6 +13,7 @@ package org.usfirst.frc190.Team190Robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc190.Team190Robot.Robot;
+import org.usfirst.frc190.Team190Robot.subsystems.OSHA;
 
 // TODO: Implement.  Needs coordination between OSHA and Dumper
 
@@ -33,7 +34,10 @@ public class  DumperStore extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.dumper.goStore();
+        if (Robot.oSHA.getPosition() == OSHA.OSHA_FORWARD)
+            Robot.dumper.goStore();
+        else
+            Robot.dumper.goClear();
     }
 
     // Called repeatedly when this Command is scheduled to run

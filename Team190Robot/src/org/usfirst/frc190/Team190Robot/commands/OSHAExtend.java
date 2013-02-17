@@ -64,6 +64,8 @@ public class  OSHAExtend extends Command {
     protected void end() {
         
         Robot.oSHA.driveOSHA(0, false);
+        if (isTimedOut())
+            ClimbPyramid.Abort();
     }
 
     // Called when another command which requires one or more of the same

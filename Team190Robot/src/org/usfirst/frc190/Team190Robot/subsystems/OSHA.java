@@ -122,6 +122,10 @@ public class OSHA extends Subsystem {
         pivotSolenoid.set(pos);
     }
     
+    public boolean getPosition() {
+        return pivotSolenoid.get();
+    }
+    
     public boolean getLowerLimit(){
         return winchLowerLimit.get();
     }

@@ -36,8 +36,10 @@ public class  OSHAPivotBack extends Command {
     protected void initialize() {
         // these two aren't sequential, but Ken says that's a-okay
         //start running the dumper cmd
-        (new DumperClear()).start();
+        
         Robot.oSHA.setPosition(OSHA.OSHA_BACKWARD);
+        if (Robot.dumper.isStored())
+            (new DumperStore()).start();
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -5,6 +5,8 @@
 package org.usfirst.frc190.Team190Robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc190.Team190Robot.OI;
+import org.usfirst.frc190.Team190Robot.Robot;
 
 /**
  * Climbs the pyramid and scores. Each step waits for the user to press
@@ -29,9 +31,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class ClimbPyramid extends CommandGroup {
 
-    public ClimbPyramid() {
-
-        //get into the ready state, if not already there
+    private static ClimbPyramid runningInstance;
+    
+    private ClimbPyramid() {
+        
+        this.setInterruptible(false);
+        
         addSequential(new ReadyForClimb());
         // Wait for the user to get under the pyramid
         addSequential(new WaitForNext());
@@ -55,5 +60,33 @@ public class ClimbPyramid extends CommandGroup {
         addSequential(new WomboCombo());
         // We are now done, so wait to win!
         addSequential(new WaitToWin());
+      
+    }
+    
+    protected void initialize()
+    {
+        OI.setLED(OI.CLIMBER_CONTROLS_LED, false);
+        OI.setLED(OI.AUTO_CLIMB_LED, true);
+    }
+    
+    protected void end()
+    {
+        OI.setLED(OI.AUTO_CLIMB_LED, false);
+    }
+
+    public static void Run()
+    {
+        runningInstance = new ClimbPyramid();
+        runningInstance.start();
+    }
+    
+    public static void Abort()
+    {
+        if (runningInstance != null)
+        {
+            runningInstance.cancel();
+            runningInstance = null;
+            (new WaitForReset()).start();
+        }
     }
 }

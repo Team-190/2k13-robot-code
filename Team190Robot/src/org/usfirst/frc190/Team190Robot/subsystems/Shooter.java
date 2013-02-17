@@ -12,6 +12,7 @@ package org.usfirst.frc190.Team190Robot.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.usfirst.frc190.Team190Robot.OI;
 import org.usfirst.frc190.Team190Robot.RobotMap;
 import org.usfirst.frc190.Team190Robot.misc.SingleChannelEncoder;
 
@@ -43,13 +44,14 @@ public class Shooter extends Subsystem {
     public static final double kP_PIVOT = 0;
     public static final double kI_PIVOT = 0;
     public static final double kD_PIVOT = 0;
+    
+    public static final double COLLECT_ANGLE = 0;
     // Angle Constants
     // TODO: Find as many angle constants as possible
     
-    // Current status of the shooter.  If this is false, the shooter should
-    // not be enabled.  Starts at false, but will immediately mirror the driver
-    // OI setting
-    private boolean enabled = false;
+    
+    // Ture if the pitch is zeroed, Can't use pitch PID until the pitch is zeroed
+    public boolean pitchZeroed = false;
 
     public Shooter() {
         // Set up the encoders
@@ -76,6 +78,12 @@ public class Shooter extends Subsystem {
         LiveWindow.addActuator("Shooter", "Pitch PID", pitchPID);
         LiveWindow.addSensor("Shooter", "Pitch Lower Limit", pitchLowerLimit);
         LiveWindow.addActuator("Shooter", "Feeder Solenoid", feederSolenoid);
+        
+        if (pitchLowerLimit.get())
+        {
+            pitchZeroed = true;
+            OI.setLED(OI.SHOOTER_STORED_LED, true);
+        }
     }
 
     // Put methods for controlling this subsystem
@@ -90,8 +98,23 @@ public class Shooter extends Subsystem {
      * @param angle The angle to set the pitch to
      */
     public void setPitch(double angle) {
-        pitchPID.setSetpoint(convertPitchToRotations(angle));
-        pitchPID.enable();
+        if (pitchZeroed)
+        {
+            pitchPID.setSetpoint(convertPitchToRotations(angle));
+            pitchPID.enable();
+        }
+    }
+    
+    public void zeroPitch()
+    {
+        pitchPID.disable();
+        if (!pitchLowerLimit.get())   
+            pitchVictor.set(-1);
+        else
+        {
+            pitchZeroed = true;
+            pitchVictor.set(0);
+        }
     }
 
     /**
@@ -101,10 +124,8 @@ public class Shooter extends Subsystem {
      * @param speed The speed to drive the wheels at
      */
     public void setSpeed(double speed) {
-        if (enabled) {
-            wheelPID.setSetpoint(speed);
-            wheelPID.enable();
-        }
+        wheelPID.setSetpoint(speed);
+        wheelPID.enable();
     }
 
     /**
@@ -133,18 +154,11 @@ public class Shooter extends Subsystem {
     }
     
     /**
-     * Enables the shooter wheels
-     */
-    private void enable(){
-        enabled = true;
-    }
-    
-    /**
      * Disables the shooter wheel.  Nothing will affect the speed of the
      * shooter until the wheel is re-enabled
      */
-    private void disable(){
-        enabled = false;
+    public void disableWheels()
+    {
         wheelPID.disable();
         wheelVictors.set(0);
     }

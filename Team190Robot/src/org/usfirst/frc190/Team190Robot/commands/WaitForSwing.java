@@ -49,9 +49,12 @@ public class WaitForSwing extends Command {
     }
 
     protected void end() {
+        if (this.isTimedOut())
+            ClimbPyramid.Abort();
     }
 
     protected void interrupted() {
+        ClimbPyramid.Abort();
     }
     
 }

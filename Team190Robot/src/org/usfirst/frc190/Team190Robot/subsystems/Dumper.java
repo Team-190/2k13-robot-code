@@ -53,7 +53,7 @@ public class Dumper extends Subsystem {
     public final double WOMBO_WRIST = 0;
     
     // we start off stored
-    private int state = 3;
+    private boolean isStored = true;
     
     public Dumper(){
         
@@ -109,32 +109,30 @@ public class Dumper extends Subsystem {
         bucketPID.disable();
         elbowPID.disable();
     }
-    public int getState() {
-        return state;
-    }
+
     public void goClear(){
-        state = 0;
+        isStored = true;
         this.bucketPID.setSetpoint(CLEAR_WRIST);
         this.elbowPID.setSetpoint(CLEAR_ELBOW);
         this.bucketPID.enable();
         this.elbowPID.enable();
     }
     public void goCollect(){
-        state = 1;
+        isStored = false;
         this.bucketPID.setSetpoint(FEEDER_SLOT_WRIST);
         this.elbowPID.setSetpoint(FEEDER_SLOT_ELBOW);
         this.bucketPID.enable();
         this.elbowPID.enable();
     }
     public void goScore(){
-        state = 2;
+        isStored = false;
         this.bucketPID.setSetpoint(WOMBO_WRIST);
         this.elbowPID.setSetpoint(WOMBO_ELBOW);
         this.bucketPID.enable();
         this.elbowPID.enable();
     }
     public void goStore(){
-        state = 3;
+        isStored = true;
         this.bucketPID.setSetpoint(STORE_WRIST);
         this.elbowPID.setSetpoint(STORE_ELBOW);
         this.bucketPID.enable();
@@ -143,5 +141,10 @@ public class Dumper extends Subsystem {
     public boolean isDone(){
         return this.bucketPID.onTarget() && this.elbowPID.onTarget();
     }
+    public boolean isStored()
+    {
+        return isStored;
+    }
+    
     
 }

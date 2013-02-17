@@ -5,35 +5,21 @@
 package org.usfirst.frc190.Team190Robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc190.Team190Robot.Robot;
-import org.usfirst.frc190.Team190Robot.subsystems.MGA;
-import org.usfirst.frc190.Team190Robot.subsystems.OSHA;
 
 /**
- * Require and stop all subsystems.
- * @author Demo
+ *
+ * @author Brian
  */
-public class WaitToWin extends Command{
+public class AbortClimb extends Command {
     
-    public WaitToWin() {
+    public AbortClimb() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.drivetrain);
-        requires(Robot.dumper);
-        requires(Robot.mGA);
-        requires(Robot.oSHA);
-        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        // Stop all movement we can
-        Robot.drivetrain.tankDrive(0, 0);
-        Robot.dumper.stopMovement();
-        Robot.oSHA.driveOSHA(0, false);
-        Robot.shooter.setSpeed(0);
-        Robot.mGA.setPosition(MGA.MGA_DOWN);
-        Robot.oSHA.setPosition(OSHA.OSHA_FORWARD);
+        ClimbPyramid.Abort();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,7 +28,7 @@ public class WaitToWin extends Command{
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
