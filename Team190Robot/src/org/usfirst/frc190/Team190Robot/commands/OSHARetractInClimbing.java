@@ -20,6 +20,7 @@ import org.usfirst.frc190.Team190Robot.RobotMap;
  */
 public class  OSHARetractInClimbing extends Command {
 
+    static boolean kill = false;
     public OSHARetractInClimbing() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -52,6 +53,10 @@ public class  OSHARetractInClimbing extends Command {
             System.out.println("OSHA Retract exited with Limit");
             return true;
         }
+        if (kill){
+            System.out.println("Killed because MGAs on bar");
+            return true;
+        }
         return false;
     }
 
@@ -59,6 +64,7 @@ public class  OSHARetractInClimbing extends Command {
     // This command should never end, it should always be interrupted by StopOSHA
     protected void end() {
         Robot.oSHA.driveOSHA(0, false);
+        kill = false;
         ClimbPyramid.Abort();
     }
 

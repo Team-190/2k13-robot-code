@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ClimbLevel extends CommandGroup {
     
     public  ClimbLevel() {
+        OSHARetractInClimbing killRetract;
+        
         //extend the OSHA
         addSequential(new OSHAExtend());
         //pivot forward
@@ -34,7 +36,7 @@ public class ClimbLevel extends CommandGroup {
         // Wait until the MGA's have latched onto the next level
         addSequential(new WaitForMGAs());
         // Stop the OSHA's in parallel with retracting the MGA
-        addParallel(new OSHAStop());
+        //addParallel(new OSHAStop(killRetract));
         //retract the MGAs
         addSequential(new MGARetract());
         // Pivot the OSHA back for the next level

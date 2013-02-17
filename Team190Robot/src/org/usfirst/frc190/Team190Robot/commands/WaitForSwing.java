@@ -16,39 +16,35 @@ import org.usfirst.frc190.Team190Robot.Robot;
  */
 public class WaitForSwing extends Command {
     
-    private double error;
-    private double prevAngle;
-    private double curAngle;
+    private double startAngle;
     
     public WaitForSwing(){
         // The gyro is in the drivetrain
         requires(Robot.drivetrain);
         
         // TODO: Find the correct timeout
-        setTimeout(3);
+        setTimeout(10);
     }
 
     protected void initialize() {
         // Get the current angle and set error to be 0
-        prevAngle = Robot.drivetrain.curSwing();
-        error = 0;
+        startAngle = Robot.drivetrain.curSwing();
     }
 
     protected void execute() {
-        // Get the current error from the previous angle and
-        // add it to the total error
-        curAngle = Robot.drivetrain.curSwing();
-        error += (curAngle - prevAngle);
+        
     }
 
     protected boolean isFinished()  {
         // TODO: Find the correct error
         // Returns whether our total swing means that we have come off the
         // bar, or if we have timed out
-        return Math.abs(error) > 2 || isTimedOut();
+        //System.out.println("Error: " + Math.abs(startAngle - Robot.drivetrain.curSwing()));
+        return Math.abs(startAngle - Robot.drivetrain.curSwing()) > 5 || isTimedOut();
     }
 
     protected void end() {
+        System.out.println("Wait for swing exiting");
         if (this.isTimedOut())
             ClimbPyramid.Abort();
     }

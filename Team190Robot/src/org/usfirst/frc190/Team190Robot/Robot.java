@@ -20,6 +20,7 @@ import org.usfirst.frc190.Team190Robot.commands.*;
 import org.usfirst.frc190.Team190Robot.subsystems.*;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -71,6 +72,7 @@ public class Robot extends IterativeRobot {
         (new FirstClimb()).start();
         OI.setLED(OI.CLIMBER_CONTROLS_LED, true);
         OI.setLED(OI.WAIT_FOR_USER_LED, true);
+        //SmartDashboard.putData("Scheduler", Scheduler.getInstance());
     }
 
     public void autonomousInit() {
@@ -91,6 +93,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+       
         
     }
 

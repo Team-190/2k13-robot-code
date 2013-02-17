@@ -13,12 +13,17 @@ import org.usfirst.frc190.Team190Robot.Robot;
  */
 public class OSHAStop extends Command {
 
-    public OSHAStop() {
+    OSHARetractInClimbing kill;
+    
+    public OSHAStop(OSHARetractInClimbing kill) {
         requires(Robot.oSHA);
+        this.kill = kill;
     }
 
     protected void initialize() {
         // Stop the OSHA
+        if (kill != null)
+            kill.cancel();
         Robot.oSHA.driveOSHA(0, false);
     }
 

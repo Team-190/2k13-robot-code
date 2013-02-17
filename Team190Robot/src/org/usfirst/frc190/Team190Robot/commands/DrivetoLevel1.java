@@ -14,16 +14,19 @@ import org.usfirst.frc190.Team190Robot.Robot;
  */
 public class DrivetoLevel1 extends Command {
     
+    Command kill;
+    
     public DrivetoLevel1() {
         requires(Robot.drivetrain);
         requires(Robot.mGA);
         
         // TODO: Need to find this
         setTimeout(2);
+        
     }
 
     protected void initialize() {
-       
+        System.out.println("Driving to level 1");
     }
 
     protected void execute() {
@@ -33,7 +36,6 @@ public class DrivetoLevel1 extends Command {
             right = 0;
         if (Robot.mGA.leftOnBar())
             left = 0;
-            
         Robot.drivetrain.tankDrive(left, right);
     }
 

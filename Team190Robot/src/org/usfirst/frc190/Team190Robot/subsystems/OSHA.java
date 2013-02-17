@@ -42,7 +42,7 @@ public class OSHA extends Subsystem {
     //OSHA Speeds
     public static final double OSHAFreeRetractSpeed = -0.25;
     public static final double OSHALoadRetractSpeed = -1;
-    public static final double OSHAExtendSpeed = 0.25;
+    public static final double OSHAExtendSpeed = 0.15;
 
 
     public OSHA() {
@@ -65,6 +65,7 @@ public class OSHA extends Subsystem {
     public void initDefaultCommand() {
         // No default command
     }
+    
 
     /**
      * Drives the OSHA at the given speed
@@ -101,13 +102,13 @@ public class OSHA extends Subsystem {
           
             }
         }else{
-            System.out.println("Tensiometer is dead");
+          //  System.out.println("Tensiometer is dead");
             extension = EXTENSION_ON;
             speed = 0;
         }
         
-        System.out.println("Speed set to " + speed);
-        System.out.println("Extension set to " + (extension ? "OFF" : "ON"));
+        //System.out.println("Speed set to " + speed);
+        //System.out.println("Extension set to " + (extension ? "OFF" : "ON"));
         winchVictor.set(speed);
         extensionSolenoid.set(extension);
     }

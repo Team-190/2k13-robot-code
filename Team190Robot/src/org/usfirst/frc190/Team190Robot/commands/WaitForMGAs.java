@@ -16,10 +16,10 @@ public class WaitForMGAs extends Command {
     boolean hooksBack;
     
     public WaitForMGAs(){
-        requires(Robot.mGA);
+        //requires(Robot.mGA);
         
         // TODO: Find correct timeout
-        setTimeout(3);
+        setTimeout(8);
     }
     
     protected void initialize() {
@@ -33,19 +33,22 @@ public class WaitForMGAs extends Command {
 
     protected boolean isFinished() {
         if(hooksBack && !Robot.mGA.onBar()){
-            System.out.println("Exiting on bar");
+            System.out.println("Wait for MGAs exiting on bar");
             return true;
         }
         else if(isTimedOut()){
-            System.out.println("Timed out");
+            System.out.println("Wait for MGAs timed out");
             return true;
         }
         return false;
     }
 
     protected void end() {
+        
         if (this.isTimedOut())
             ClimbPyramid.Abort();
+        else
+            OSHARetractInClimbing.kill = true;
     }
 
     protected void interrupted() {

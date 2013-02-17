@@ -35,12 +35,12 @@ public class ClimbPyramid extends CommandGroup {
     
     private ClimbPyramid() {
         
-        this.setInterruptible(false);
         
+        this.setInterruptible(false);
+        addParallel(new TankDrive());
         addSequential(new ReadyForClimb());
         // Wait for the user to get under the pyramid
         addSequential(new WaitForNext());
-        
         // We are under the pyramid, so start the level 1 climb
         addSequential(new Level1());
         // Wait for the user to start the level 2 climb
@@ -76,8 +76,11 @@ public class ClimbPyramid extends CommandGroup {
 
     public static void Run()
     {
-        runningInstance = new ClimbPyramid();
-        runningInstance.start();
+        if (runningInstance == null)
+        {
+            runningInstance = new ClimbPyramid();
+            runningInstance.start();
+        }
     }
     
     public static void Abort()

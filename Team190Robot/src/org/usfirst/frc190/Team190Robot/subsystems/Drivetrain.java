@@ -31,7 +31,7 @@ public class Drivetrain extends Subsystem implements PIDOutput {
     private PIDController turningPID;
     
     //Drive speeds for level 1 climb
-    public static final double DRIVE_TO_LEVEL1_SPEED = 0.25;
+    public static final double DRIVE_TO_LEVEL1_SPEED = -0.1;
     
     // TODO: PID Tuning
     private final double kP = 0.0;
@@ -90,7 +90,8 @@ public class Drivetrain extends Subsystem implements PIDOutput {
      */
     public void tankDrive(double left, double right) {
         if(!turningPID.isEnable()){
-            robotDrive.tankDrive(left, right);
+            System.out.println("Left: " + left + " Right: " + right);
+            robotDrive.tankDrive(left, right, false);
         }
     }
 

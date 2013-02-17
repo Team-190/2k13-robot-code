@@ -20,6 +20,7 @@ public class WaitForNext extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         OI.setLED(OI.WAIT_FOR_USER_LED, true);
+        System.out.println("Waiting for next...");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,12 +29,13 @@ public class WaitForNext extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !Robot.oi.nextButton.get();
+        return Robot.oi.nextButton.get();
     }
 
     // Called once after isFinished returns true
     protected void end() {
         OI.setLED(OI.WAIT_FOR_USER_LED, false);
+        System.out.println("Received a next");
     }
 
     // Called when another command which requires one or more of the same

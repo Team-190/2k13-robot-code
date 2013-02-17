@@ -30,26 +30,30 @@ public class Dumper extends Subsystem {
     
     // PID Controllers
     public PIDController bucketPID = new PIDController(kP_BUCKET, kI_BUCKET, kD_BUCKET, bucketEncoder, bucketMotor);
-    public PIDController elbowPID = new PIDController(kP_ELBOW, kI_ELBOW, kD_ELBOW, elbowPot, elbowMotor);
+    public PIDController elbowPID = new PIDController(kP_ELBOW, kI_ELBOW, kD_ELBOW, new PIDSource(){
+        public double pidGet(){
+            return elbowPot.getAverageVoltage();
+        }
+    }, elbowMotor);
 
     // PID Constants
     // TODO: Tune Constants
     private static final double kP_BUCKET = 1.0;
     private static final double kI_BUCKET = 0;
     private static final double kD_BUCKET = 0;
-    private static final double kP_ELBOW = 1.0;
-    private static final double kI_ELBOW = 0;
+    private static final double kP_ELBOW = -0.250;
+    private static final double kI_ELBOW = -.010;
     private static final double kD_ELBOW = 0;
     
     // Position Constants
     // TODO: Find these constants
-    public final double FEEDER_SLOT_ELBOW = 0.0;
+    public final double FEEDER_SLOT_ELBOW = 0.8;
     public final double FEEDER_SLOT_WRIST = 0.0;
-    public final double STORE_ELBOW = 0;
+    public final double STORE_ELBOW = 4.9;
     public final double STORE_WRIST = 0;
-    public final double CLEAR_ELBOW = 0;
+    public final double CLEAR_ELBOW = 3.7;
     public final double CLEAR_WRIST = 0;
-    public final double WOMBO_ELBOW = 0;
+    public final double WOMBO_ELBOW = 0.5;
     public final double WOMBO_WRIST = 0;
     
     // we start off stored
@@ -63,11 +67,13 @@ public class Dumper extends Subsystem {
         bucketPID.setOutputRange(-1.0, 1.0);
         elbowPID.setContinuous(false); 
         elbowPID.setAbsoluteTolerance(0.2); 
-        elbowPID.setOutputRange(-1.0, 1.0); 
+        elbowPID.setOutputRange(-0.3, 0.8); 
+       
         
         // Add components to the live window
         LiveWindow.addActuator("Dumper", "Bucket Motor", (Victor) bucketMotor);
         LiveWindow.addActuator("Dumper", "Bucket PID", bucketPID);
+        //LiveWindow.addSensor("Dumper", "Bucket Encoder", bucketEncoder);
         LiveWindow.addActuator("Dumper", "Elbow Motor", (Victor) elbowMotor);
         LiveWindow.addSensor("Dumper", "Elbow Pot", elbowPot);
         LiveWindow.addActuator("Dumper", "Elbow PID", elbowPID);
@@ -105,7 +111,7 @@ public class Dumper extends Subsystem {
      */
     public void stopMovement(){
         bucketPID.setSetpoint(bucketEncoder.getPosition());
-        elbowPID.setSetpoint(elbowPot.getAverageValue());
+        elbowPID.setSetpoint(elbowPot.getAverageVoltage());
         bucketPID.disable();
         elbowPID.disable();
     }

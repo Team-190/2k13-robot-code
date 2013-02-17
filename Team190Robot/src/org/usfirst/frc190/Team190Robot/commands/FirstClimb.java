@@ -28,11 +28,12 @@ public class FirstClimb extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !Robot.oi.nextButton.get();
+        return Robot.oi.nextButton.get();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        System.out.println("Starting to climb the pyramid");
         ClimbPyramid.Run();
     }
 

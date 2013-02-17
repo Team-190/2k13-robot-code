@@ -17,10 +17,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class Level1 extends CommandGroup {
     
+    
     public  Level1() {
+        addParallel(new TankDrive());
         
         //extend the MGAs
-        addSequential(new MGAExtend());        
+        addSequential(new MGAExtend());      
+        
         // Wait for user input
         addSequential(new WaitForNext());
         

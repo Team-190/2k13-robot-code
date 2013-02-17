@@ -34,6 +34,7 @@ public class  MGAExtend extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         Robot.mGA.setPosition(MGA.MGA_UP);
+        System.out.println("Extending the MGAs");
     }
 
     // Called repeatedly when this Command is scheduled to run

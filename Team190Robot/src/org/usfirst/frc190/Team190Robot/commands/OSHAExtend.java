@@ -27,7 +27,7 @@ public class  OSHAExtend extends Command {
         requires(Robot.oSHA);
         
         // TODO: Need to time this process, constanted
-        this.setTimeout(10.0);
+        this.setTimeout(20.0);
     }
 
     // Called just before this Command runs the first time

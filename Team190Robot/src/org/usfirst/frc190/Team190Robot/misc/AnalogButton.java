@@ -34,7 +34,7 @@ public class AnalogButton extends Button{
             val = DriverStation.getInstance().getEnhancedIO().getAnalogIn(port);
         }
         catch(EnhancedIOException exception){
-            exception.printStackTrace();
+  //          exception.printStackTrace();
         }
         //if the analog value is within the analog range
         return (val>=voltage-tolerance && val<= voltage+tolerance);
