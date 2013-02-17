@@ -25,7 +25,7 @@ public class Dumper extends Subsystem {
     private SpeedController elbowMotor = new Victor(RobotMap.DUMPER_ELBOW_VICTOR);
     
     // Sensors
-    private VexEncoder bucketEncoder = new VexEncoder(RobotMap.DUMPER_BUCKET_ENCODER);
+    public VexEncoder bucketEncoder = new VexEncoder(RobotMap.DUMPER_BUCKET_ENCODER);
     private AnalogChannel elbowPot = new AnalogChannel(RobotMap.DUMPER_ELBOW_POT);
     
     // PID Controllers
@@ -46,14 +46,15 @@ public class Dumper extends Subsystem {
     private static final double kD_ELBOW = 0;
     
     // Position Constants
-    // TODO: Find these constants
-    public final double FEEDER_SLOT_ELBOW = 0.8;
+    // top: 
+    // bottom: 
+    public final double FEEDER_SLOT_ELBOW = 2.50;
     public final double FEEDER_SLOT_WRIST = 0.0;
-    public final double STORE_ELBOW = 4.9;
+    public final double STORE_ELBOW = 1.90;
     public final double STORE_WRIST = 0;
-    public final double CLEAR_ELBOW = 3.7;
+    public final double CLEAR_ELBOW = 2.00;
     public final double CLEAR_WRIST = 0;
-    public final double WOMBO_ELBOW = 0.5;
+    public final double WOMBO_ELBOW = 3.15;
     public final double WOMBO_WRIST = 0;
     
     // we start off stored
@@ -73,7 +74,12 @@ public class Dumper extends Subsystem {
         // Add components to the live window
         LiveWindow.addActuator("Dumper", "Bucket Motor", (Victor) bucketMotor);
         LiveWindow.addActuator("Dumper", "Bucket PID", bucketPID);
-        //LiveWindow.addSensor("Dumper", "Bucket Encoder", bucketEncoder);
+        try{
+            LiveWindow.addSensor("Dumper", "Bucket Encoder", bucketEncoder);
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
         LiveWindow.addActuator("Dumper", "Elbow Motor", (Victor) elbowMotor);
         LiveWindow.addSensor("Dumper", "Elbow Pot", elbowPot);
         LiveWindow.addActuator("Dumper", "Elbow PID", elbowPID);

@@ -20,6 +20,7 @@ import org.usfirst.frc190.Team190Robot.commands.*;
 import org.usfirst.frc190.Team190Robot.subsystems.*;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -103,7 +104,12 @@ public class Robot extends IterativeRobot {
     //Relay spike = new Relay(RobotMap.COMPRESSOR_RELAY);
     //DigitalInput digital = new DigitalInput(RobotMap.COMPRESSOR_SWITCH);
     public void teleopPeriodic() {
+        /*System.out.println("agh");
+        System.out.flush();
+        System.out.println(Robot.dumper.bucketEncoder.getPosition());*/
+        SmartDashboard.putNumber("Bucket Encoder", Robot.dumper.bucketEncoder.getPosition());
         Scheduler.getInstance().run();
+        
         /*if(!digital.get()){
             spike.set(Relay.Value.kForward);
         }else{
@@ -116,5 +122,6 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+        System.out.println(Robot.dumper.bucketEncoder.getPosition());
     }
 }

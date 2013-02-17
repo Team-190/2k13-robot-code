@@ -42,6 +42,7 @@ public class RobotMap {
 // MGA's
     // Actuators
     public static final int MGA_SOLENDOID = 1;
+    public static final int MGA_SOLENOID_BACK = 5;
     //Sensors
     public static final int MGA_LEFT_LIMIT = 5;
     public static final int MGA_RIGHT_LIMIT = 4;
@@ -61,8 +62,8 @@ public class RobotMap {
     public static final int DUMPER_BUCKET_VICTOR = 4;
     public static final int DUMPER_ELBOW_VICTOR = 5;
     //Sensors
-    public static final int DUMPER_BUCKET_ENCODER = 1;
     public static final int DUMPER_ELBOW_POT = 3;
+    public static final int DUMPER_BUCKET_ENCODER = 1;
         
 // Compressor
     public static final int COMPRESSOR_RELAY = 1;

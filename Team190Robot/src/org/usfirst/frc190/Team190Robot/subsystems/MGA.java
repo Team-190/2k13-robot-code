@@ -25,6 +25,7 @@ public class MGA extends Subsystem {
     
     // Actuators
     private Solenoid armSolenoid = new Solenoid(RobotMap.MGA_SOLENDOID);
+    private Solenoid armSolenoidBack = new Solenoid(RobotMap.MGA_SOLENOID_BACK);
     
     // Sensors
     // TODO: Figure out final position of the limit switches
@@ -55,7 +56,14 @@ public class MGA extends Subsystem {
      * @param pos The position to set the OSHA to
      */
     public void setPosition(boolean pos){
-        armSolenoid.set(pos);
+        if(pos){
+            armSolenoidBack.set(!pos);
+            armSolenoid.set(pos);
+        }
+        else{
+            armSolenoid.set(pos);
+            armSolenoidBack.set(!pos);
+        }
     }
     
     /**

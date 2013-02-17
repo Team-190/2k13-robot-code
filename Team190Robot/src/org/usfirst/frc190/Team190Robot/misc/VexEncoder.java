@@ -4,16 +4,19 @@
  */
 package org.usfirst.frc190.Team190Robot.misc;
 
+import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.DigitalModule;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
+import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.util.BoundaryException;
 
 /**
  *
  * @author alex
  */
-public class VexEncoder extends I2C implements PIDSource {
+public class VexEncoder extends I2C implements PIDSource, LiveWindowSendable {
     
     // The default address for an encoder that's just been turrned on.
     private static final int DEFAULT_ADDRESS = 0x30;
@@ -87,6 +90,7 @@ public class VexEncoder extends I2C implements PIDSource {
      * @return Signed number of rotations of the encoder.
      */
     public double getPosition() {
+        
         return ((double) getRawPosition()) / 627.2;
     }
     
@@ -124,4 +128,48 @@ public class VexEncoder extends I2C implements PIDSource {
 
         return transaction(registerAddressArray, registerAddressArray.length, buffer, count);
     }
+    
+    /*
+     * Live Window code, only does anything if live window is activated.
+     */
+    public String getSmartDashboardType(){
+        return "Quadrature Encoder"; 
+    }
+    private ITable m_table;
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void initTable(ITable subtable) {
+        m_table = subtable;
+        updateTable();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public ITable getTable(){
+        return m_table;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void updateTable() {
+        if (m_table != null) {
+            m_table.putNumber("Speed", 0);
+            m_table.putNumber("Distance", getPosition());
+            m_table.putNumber("Distance per Tick", 1);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void startLiveWindowMode() {}
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void stopLiveWindowMode() {}
 }
