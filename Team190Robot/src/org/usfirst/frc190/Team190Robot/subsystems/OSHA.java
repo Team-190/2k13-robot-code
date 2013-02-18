@@ -72,40 +72,37 @@ public class OSHA extends Subsystem {
      *
      * @param speed The speed to drive the OSHA at
      */
-    public void driveOSHA(double speed, boolean stopOnNoTension) {
+    public void driveOSHA(double speed, boolean underLoad) {
         boolean extension = false;
         // Check to see which direction we are trying to move       
         //Actually checking for tension
-        if(this.isTensioned() || !stopOnNoTension){
-            if (speed < 0) {
-                // Check to make sure we don't go past the bottom limit.
-           
-                // If we do, set the speed to 0, and make sure the extension is fired
-                if (winchLowerLimit.get()) {
-                    speed = 0;
-                    extension = EXTENSION_ON;
-                } else {
-                    // If we are trying to lower the OSHA, make sure that the 
-                    // extension is set to extension down
-                    extension = EXTENSION_OFF;
-                }
-            } else {
-                // Check to make sure we don't go past the upper limit.
-                // If we do, set the speed to 0 and let the next check make sure
-                // that the extension is up
-                if (winchUpperLimit.get()) {
-                    speed = 0;
-                }
-                // We are trying to go up, so make sure that the extension is 
-                // set to extension up
-                extensionSolenoid.set(EXTENSION_ON);
-          
+        if (speed < 0) { // RETRACTING
+            // Check to make sure we don't go past the bottom limit.
+
+            // If we do, set the speed to 0, and make sure the extension is fired
+            if (winchLowerLimit.get()) {
+                speed = 0;
+                extension = EXTENSION_ON;
+            } else if(underLoad){
+                // We shouldn't be fighting if we're under load
+                extension = EXTENSION_OFF;
             }
-        }else{
-          //  System.out.println("Tensiometer is dead");
+            else{
+                //If we aren't we must be fighting
+                extension = EXTENSION_ON;
+            }
+        } else if (this.isTensioned()){ // EXTENDING. WE NEED TENSION
+            // Check to make sure we don't go past the upper limit.
+            // If we do, set the speed to 0 and let the next check make sure
+            // that the extension is up
+            if (winchUpperLimit.get()) {
+                speed = 0;
+            }
+            // We are trying to go up, so make sure that the extension is 
+            // set to extension up
             extension = EXTENSION_ON;
-            speed = 0;
         }
+       
         
         //System.out.println("Speed set to " + speed);
         //System.out.println("Extension set to " + (extension ? "OFF" : "ON"));

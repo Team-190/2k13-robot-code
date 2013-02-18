@@ -5,6 +5,7 @@
 package org.usfirst.frc190.Team190Robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc190.Team190Robot.OI;
 import org.usfirst.frc190.Team190Robot.Robot;
 
 /**
@@ -20,6 +21,8 @@ public class FirstClimb extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        OI.setLED(OI.WAIT_FOR_USER_LED, true);
+        OI.setLED(OI.CLIMBER_CONTROLS_LED, true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,6 +36,7 @@ public class FirstClimb extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        OI.setLED(OI.WAIT_FOR_USER_LED, false);
         System.out.println("Starting to climb the pyramid");
         ClimbPyramid.Run();
     }

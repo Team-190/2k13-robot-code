@@ -37,7 +37,7 @@ public class  OSHAExtend extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.oSHA.driveOSHA(Robot.oSHA.OSHAExtendSpeed, true);
+        Robot.oSHA.driveOSHA(Robot.oSHA.OSHAExtendSpeed, false);
     }
 
     // Make this return true when this Command no longer needs to run execute()
