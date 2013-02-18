@@ -167,4 +167,8 @@ public class Shooter extends Subsystem {
         wheelPID.disable();
         wheelVictors.set(0);
     }
+
+    public void enableWheels() {
+        wheelPID.enable();
+    }
 }

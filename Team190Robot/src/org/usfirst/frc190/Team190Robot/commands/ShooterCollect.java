@@ -30,7 +30,10 @@ public class ShooterCollect extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        //set wheels
+        if (Robot.oi.getWheels())
+            Robot.shooter.enableWheels();
+        else
+            Robot.shooter.disableWheels();
     }
 
     // Make this return true when this Command no longer needs to run execute()

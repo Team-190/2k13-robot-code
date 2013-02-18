@@ -124,6 +124,11 @@ public class OI {
     public AnalogButton shooterAuto;
     public AnalogButton shooterManual;
     
+    public AnalogButton shooterPitchUp;
+    public AnalogButton shooterPitchDown;
+    public AnalogButton shooterSpeedUp;
+    public AnalogButton shooterSpeedDown;
+    
     
     public OI() {
         //turn off all of the LEDs
@@ -203,6 +208,12 @@ public class OI {
         
         shooterManual = new AnalogButton(0.825, SHOOTER_STATE_BUTTONS);
         shooterManual.whenPressed(new ShooterManual());
+        
+        shooterPitchUp = new AnalogButton(3.3, SHOOTER_PITCH_JOG);
+        shooterPitchDown = new AnalogButton(1.65, SHOOTER_PITCH_JOG);
+        
+        shooterSpeedUp = new AnalogButton(3.3, SHOOTER_PITCH_JOG);
+        shooterSpeedDown = new AnalogButton(1.65, SHOOTER_PITCH_JOG);
           
         
         // SmartDashboard Buttons
@@ -256,15 +267,33 @@ public class OI {
     
     public boolean getTarget()
     {
-        return false;
+        try {
+        return !DriverStation.getInstance().getEnhancedIO().getDigital(SHOOTER_TARGET_BUTTON);
+        }
+        catch (Exception ex) {
+            return false;
+        }
     }
     
     public boolean getWheels()
     {
-        return false;
+        try {
+        return DriverStation.getInstance().getEnhancedIO().getDigital(SHOOTER_WHEELS_SWITCH);
+        }
+        catch (Exception ex) {
+            return false;
+        }
     }
     
-    
+    public boolean getShoot()
+    {
+        try {
+        return !DriverStation.getInstance().getEnhancedIO().getDigital(SHOOTER_SHOOT_BUTTON);
+        }
+        catch (Exception ex) {
+            return false;
+        }
+    }
     
     public double getShooterManualPot()
     {

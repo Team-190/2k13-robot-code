@@ -21,7 +21,7 @@ public class DrivetoLevel1 extends Command {
         requires(Robot.mGA);
         
         // TODO: Need to find this
-        setTimeout(2);
+        setTimeout(5);
         
     }
 

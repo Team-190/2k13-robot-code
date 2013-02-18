@@ -14,6 +14,17 @@ import org.usfirst.frc190.Team190Robot.Robot;
  */
 public class ShooterManual extends Command {
     
+    private static final double pitchJogUp = 0;
+    private static final double pitchJogDown = 0;
+    private static final double speedJogUp = 0;
+    private static final double speedJogDown = 0;
+    
+    private static double pitchJog = 0;
+    private static double speedJog = 0;
+    
+    private double speed;
+    private double pitch;
+    
     public ShooterManual() {
         requires(Robot.shooter);
         OI.setLED(OI.SHOOTER_STORED_LED, false);
@@ -28,6 +39,27 @@ public class ShooterManual extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        if (Robot.oi.getWheels())
+            Robot.shooter.enableWheels();
+        else
+            Robot.shooter.disableWheels();
+        
+        //Set pitch and speed based on pot
+        //double manualSlide = Robot.io.getManualPot();
+ 
+        
+        if (Robot.oi.shooterPitchUp.get())
+            pitchJog += pitchJogUp;
+        else if (Robot.oi.shooterPitchDown.get())
+            pitchJog -= pitchJogDown;
+        
+        if (Robot.oi.shooterSpeedUp.get())
+            speedJog += speedJogUp;
+        else if (Robot.oi.shooterSpeedDown.get())
+            speedJog -= speedJogDown;
+        
+        Robot.shooter.setPitch(pitch);
+        Robot.shooter.setSpeed(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
