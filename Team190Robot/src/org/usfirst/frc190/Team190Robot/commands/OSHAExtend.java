@@ -32,6 +32,7 @@ public class  OSHAExtend extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("Starting to extend the OSHAs");
         
     }
 
@@ -65,7 +66,7 @@ public class  OSHAExtend extends Command {
         
         Robot.oSHA.driveOSHA(0, false);
         if (isTimedOut())
-            ClimbPyramid.Abort();
+            ClimbPyramid.Abort("the OSHA never hit the upper limit");
     }
 
     // Called when another command which requires one or more of the same

@@ -48,7 +48,7 @@ public class DrivetoLevel1 extends Command {
     protected void end() {
         Robot.drivetrain.tankDrive(0, 0);
         if (isTimedOut())
-            ClimbPyramid.Abort();
+            ClimbPyramid.Abort("the MGAs never hit the bar");
     }
 
     protected void interrupted() {

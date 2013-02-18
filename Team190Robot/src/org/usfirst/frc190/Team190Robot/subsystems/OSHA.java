@@ -40,7 +40,7 @@ public class OSHA extends Subsystem {
     public static final boolean EXTENSION_OFF = true;
     
     //OSHA Speeds
-    public static final double OSHAFreeRetractSpeed = -0.4;
+    public static final double OSHAFreeRetractSpeed = -0.25;
     public static final double OSHALoadRetractSpeed = -1;
     public static final double OSHAExtendSpeed = 0.3;
 

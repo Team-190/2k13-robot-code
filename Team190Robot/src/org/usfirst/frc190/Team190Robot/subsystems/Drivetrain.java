@@ -90,7 +90,6 @@ public class Drivetrain extends Subsystem implements PIDOutput {
      */
     public void tankDrive(double left, double right) {
         if(!turningPID.isEnable()){
-            System.out.println("Left: " + left + " Right: " + right);
             robotDrive.tankDrive(left, right, false);
         }
     }

@@ -74,23 +74,36 @@ public class ClimbPyramid extends CommandGroup {
         OI.setLED(OI.AUTO_CLIMB_LED, false);
         OI.setLED(OI.CLIMBER_CONTROLS_LED, true);
     }
+    
+    protected void interrupted()
+    {
+        end();
+    }
 
     public static void Run()
     {
         if (runningInstance == null)
         {
+            System.out.println("Starting automatic climb sequence...");
             runningInstance = new ClimbPyramid();
             runningInstance.start();
         }
+        else
+            System.out.println("Can't start climbing because a climb is already running.");
     }
     
-    public static void Abort()
+    public static void Abort(String abortString)
     {
         if (runningInstance != null)
         {
+            System.out.println("Oh noes! We aborted because " + abortString + " :(");
             runningInstance.cancel();
             runningInstance = null;
             (new WaitForReset()).start();
+        }
+        else
+        {
+            System.out.println("Tried to abort climb because "+ abortString + ", but climb is not running.");
         }
     }
 }

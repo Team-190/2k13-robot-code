@@ -19,7 +19,7 @@ public class AbortClimb extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        ClimbPyramid.Abort();
+        ClimbPyramid.Abort("the user hit the abort button");
     }
 
     // Called repeatedly when this Command is scheduled to run

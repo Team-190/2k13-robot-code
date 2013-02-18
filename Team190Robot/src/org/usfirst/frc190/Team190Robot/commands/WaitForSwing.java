@@ -46,11 +46,11 @@ public class WaitForSwing extends Command {
     protected void end() {
         System.out.println("Wait for swing exiting");
         if (this.isTimedOut())
-            ClimbPyramid.Abort();
+            ClimbPyramid.Abort("the swing never happened");
     }
 
     protected void interrupted() {
-        ClimbPyramid.Abort();
+        ClimbPyramid.Abort("the swing was interrupted");
     }
     
 }
