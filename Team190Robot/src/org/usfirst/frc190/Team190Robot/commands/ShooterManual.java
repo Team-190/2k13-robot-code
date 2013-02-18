@@ -44,10 +44,6 @@ public class ShooterManual extends Command {
         else
             Robot.shooter.disableWheels();
         
-        //Set pitch and speed based on pot
-        //double manualSlide = Robot.io.getManualPot();
- 
-        
         if (Robot.oi.shooterPitchUp.get())
             pitchJog += pitchJogUp;
         else if (Robot.oi.shooterPitchDown.get())
@@ -57,6 +53,9 @@ public class ShooterManual extends Command {
             speedJog += speedJogUp;
         else if (Robot.oi.shooterSpeedDown.get())
             speedJog -= speedJogDown;
+        
+        //Set pitch and speed based on pot
+        //double manualSlide = Robot.io.getManualPot();
         
         Robot.shooter.setPitch(pitch);
         Robot.shooter.setSpeed(speed);

@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.communication.UsageReporting;
+import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
+import edu.wpi.first.wpilibj.parsing.IUtility;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 import edu.wpi.first.wpilibj.util.BoundaryException;
@@ -18,7 +20,7 @@ import java.util.Vector;
  *
  * @author alex
  */
-public class ExtensiblePIDController {
+public class ExtensiblePIDController implements IUtility, LiveWindowSendable {
     
     public static final double kDefaultPeriod = .05;
     private static int instances = 0;
@@ -534,7 +536,7 @@ public class ExtensiblePIDController {
     }
     
     public String getSmartDashboardType(){
-        return "PIDController";
+        return "Extensible PIDController";
     }
 
     private ITableListener listener = new ITableListener() {

@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc190.Team190Robot.RobotMap;
+import org.usfirst.frc190.Team190Robot.misc.ExtensiblePIDController;
+import org.usfirst.frc190.Team190Robot.misc.GravityCompensationTerm;
 import org.usfirst.frc190.Team190Robot.misc.VexEncoder;
 
 /**
@@ -30,7 +32,7 @@ public class Dumper extends Subsystem {
     
     // PID Controllers
     public PIDController bucketPID = new PIDController(kP_BUCKET, kI_BUCKET, kD_BUCKET, bucketEncoder, bucketMotor);
-    public PIDController elbowPID = new PIDController(kP_ELBOW, kI_ELBOW, kD_ELBOW, new PIDSource(){
+    public ExtensiblePIDController elbowPID = new ExtensiblePIDController(kP_ELBOW, kI_ELBOW, kD_ELBOW, new PIDSource(){
         public double pidGet(){
             return elbowPot.getAverageVoltage();
         }
@@ -38,23 +40,25 @@ public class Dumper extends Subsystem {
 
     // PID Constants
     // TODO: Tune Constants
-    private static final double kP_BUCKET = 1.0;
-    private static final double kI_BUCKET = 0;
+    private static final double kP_BUCKET = 3.0;
+    private static final double kI_BUCKET = 0.020;
     private static final double kD_BUCKET = 0;
-    private static final double kP_ELBOW = -0.250;
-    private static final double kI_ELBOW = -.010;
+    private static final double kP_ELBOW = 1.5;
+    private static final double kI_ELBOW = 0.01;
     private static final double kD_ELBOW = 0;
+    private static final double kG_ELBOW = 0;
+    private static final double T_ELBOW = 0;
     
     // Position Constants
     // top: 
     // bottom: 
-    public final double FEEDER_SLOT_ELBOW = 2.50;
+    public final double FEEDER_SLOT_ELBOW = 1.98;
     public final double FEEDER_SLOT_WRIST = 0.0;
-    public final double STORE_ELBOW = 1.90;
+    public final double STORE_ELBOW = 0.5;
     public final double STORE_WRIST = 0;
-    public final double CLEAR_ELBOW = 2.00;
+    public final double CLEAR_ELBOW = 1.35;
     public final double CLEAR_WRIST = 0;
-    public final double WOMBO_ELBOW = 3.15;
+    public final double WOMBO_ELBOW = 3.69;
     public final double WOMBO_WRIST = 0;
     
     // we start off stored
@@ -69,6 +73,7 @@ public class Dumper extends Subsystem {
         elbowPID.setContinuous(false); 
         elbowPID.setAbsoluteTolerance(0.2); 
         elbowPID.setOutputRange(-0.3, 0.8); 
+        elbowPID.addTerm(new GravityCompensationTerm(kG_ELBOW, T_ELBOW));
        
         
         // Add components to the live window
