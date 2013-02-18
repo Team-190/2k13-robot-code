@@ -21,8 +21,6 @@ public class WaitForReset extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        OI.setLED(OI.AUTO_CLIMB_LED, false);
-        OI.setLED(OI.CLIMBER_CONTROLS_LED, true);
     }
 
     // Called repeatedly when this Command is scheduled to run

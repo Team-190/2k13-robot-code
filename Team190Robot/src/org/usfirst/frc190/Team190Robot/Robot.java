@@ -71,8 +71,6 @@ public class Robot extends IterativeRobot {
         compressor.start();
        
         (new FirstClimb()).start();
-        OI.setLED(OI.CLIMBER_CONTROLS_LED, true);
-        OI.setLED(OI.WAIT_FOR_USER_LED, true);
         //SmartDashboard.putData("Scheduler", Scheduler.getInstance());
     }
 

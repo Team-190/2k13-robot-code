@@ -116,6 +116,11 @@ public class Shooter extends Subsystem {
             pitchVictor.set(0);
         }
     }
+    
+    public void stopPitch()
+    {
+        pitchVictor.set(0);
+    }
 
     /**
      * Directly sets the speed of the wheels.  If the shooter is disabled
