@@ -72,6 +72,7 @@ public class ClimbPyramid extends CommandGroup {
     protected void end()
     {
         OI.setLED(OI.AUTO_CLIMB_LED, false);
+        OI.setLED(OI.CLIMBER_CONTROLS_LED, true);
     }
 
     public static void Run()
