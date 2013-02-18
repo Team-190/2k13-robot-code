@@ -40,9 +40,9 @@ public class OSHA extends Subsystem {
     public static final boolean EXTENSION_OFF = true;
     
     //OSHA Speeds
-    public static final double OSHAFreeRetractSpeed = -0.25;
+    public static final double OSHAFreeRetractSpeed = -0.4;
     public static final double OSHALoadRetractSpeed = -1;
-    public static final double OSHAExtendSpeed = 0.15;
+    public static final double OSHAExtendSpeed = 0.3;
 
 
     public OSHA() {
@@ -101,6 +101,8 @@ public class OSHA extends Subsystem {
             // We are trying to go up, so make sure that the extension is 
             // set to extension up
             extension = EXTENSION_ON;
+        } else {
+            speed = 0;
         }
        
         
@@ -141,5 +143,7 @@ public class OSHA extends Subsystem {
             untensionedCount++;
         }
         return (untensionedCount < 10);
+        //return !this.tensiometer.get();
+        
     }
 }
