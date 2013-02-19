@@ -38,8 +38,8 @@ public class  OSHAPivotBack extends Command {
         //start running the dumper cmd
         
         Robot.oSHA.setPosition(OSHA.OSHA_BACKWARD);
-        if (Robot.dumper.isStored())
-            (new DumperStore()).start();
+        if(Robot.dumper.isStored())
+            Robot.dumper.goClear();
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -55,11 +55,11 @@ public class Dumper extends Subsystem {
     public final double FEEDER_SLOT_ELBOW = 1.98;
     public final double FEEDER_SLOT_WRIST = 0.0;
     public final double STORE_ELBOW = 0.5;
-    public final double STORE_WRIST = 0;
-    public final double CLEAR_ELBOW = 1.35;
-    public final double CLEAR_WRIST = 0;
-    public final double WOMBO_ELBOW = 3.69;
-    public final double WOMBO_WRIST = 0;
+    public final double STORE_WRIST = 0.0;
+    public final double CLEAR_ELBOW = 0.9;
+    public final double CLEAR_WRIST = 0.0;
+    public final double WOMBO_ELBOW = 3.64;
+    public final double WOMBO_WRIST = -1.5;
     
     // we start off stored
     private boolean isStored = true;
@@ -128,10 +128,10 @@ public class Dumper extends Subsystem {
     }
 
     public void goClear(){
-        isStored = true;
-        this.bucketPID.setSetpoint(CLEAR_WRIST);
+        isStored = false;
+        //this.bucketPID.setSetpoint(CLEAR_WRIST);
         this.elbowPID.setSetpoint(CLEAR_ELBOW);
-        this.bucketPID.enable();
+        //this.bucketPID.enable();
         this.elbowPID.enable();
     }
     public void goCollect(){
@@ -143,10 +143,13 @@ public class Dumper extends Subsystem {
     }
     public void goScore(){
         isStored = false;
-        this.bucketPID.setSetpoint(WOMBO_WRIST);
-        this.elbowPID.setSetpoint(WOMBO_ELBOW);
-        this.bucketPID.enable();
         this.elbowPID.enable();
+        this.elbowPID.setSetpoint(WOMBO_ELBOW);
+        //wait to start the bucket moving
+        Timer.delay(0.2);
+        this.bucketPID.setSetpoint(WOMBO_WRIST);
+        this.bucketPID.enable();
+        
     }
     public void goStore(){
         isStored = true;
