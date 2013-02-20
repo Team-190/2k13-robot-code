@@ -5,6 +5,7 @@
 package org.usfirst.frc190.Team190Robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc190.Team190Robot.Robot;
 
 /**
@@ -14,7 +15,7 @@ import org.usfirst.frc190.Team190Robot.Robot;
 public class WaitForMGAs extends Command {
     
     boolean hooksBack;
-    
+    Timer timer;
     public WaitForMGAs(){
         //requires(Robot.mGA);
         
@@ -24,15 +25,18 @@ public class WaitForMGAs extends Command {
     
     protected void initialize() {
         hooksBack = false;
+        timer = new Timer();
     }
 
     protected void execute() {
-        if (Robot.mGA.onBar())
+        if (Robot.mGA.onBar() && !hooksBack){
             hooksBack = true;
+            timer.start();
+        }
     }
 
     protected boolean isFinished() {
-        if(hooksBack && !Robot.mGA.onBar()){
+        if(hooksBack && !Robot.mGA.onBar() && timer.get() > 1.0){
             System.out.println("Wait for MGAs exiting on bar");
             return true;
         }
