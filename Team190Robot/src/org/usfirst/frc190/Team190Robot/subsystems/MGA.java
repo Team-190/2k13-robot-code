@@ -70,7 +70,7 @@ public class MGA extends Subsystem {
      * Tells whether the MGA's are on a bar
      * @return True if we are on a bar, false otherwise
      */
-    public boolean onBar(){
+    public boolean hooksBack(){
         return !leftArmLimit.get() && !rightArmLimit.get();
     }
     

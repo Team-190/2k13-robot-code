@@ -14,7 +14,7 @@ import org.usfirst.frc190.Team190Robot.Robot;
  */
 public class WaitForMGAs extends Command {
     
-    boolean hooksBack;
+    boolean wereBack;
     Timer timer;
     public WaitForMGAs(){
         //requires(Robot.mGA);
@@ -24,19 +24,19 @@ public class WaitForMGAs extends Command {
     }
     
     protected void initialize() {
-        hooksBack = false;
+        wereBack = false;
         timer = new Timer();
     }
 
     protected void execute() {
-        if (Robot.mGA.onBar() && !hooksBack){
-            hooksBack = true;
+        if (Robot.mGA.hooksBack() && !wereBack){
+            wereBack = true;
             timer.start();
         }
     }
 
     protected boolean isFinished() {
-        if(hooksBack && !Robot.mGA.onBar() && timer.get() > 1.0){
+        if(wereBack && !Robot.mGA.hooksBack() && timer.get() > 1.0){
             System.out.println("Wait for MGAs exiting on bar");
             return true;
         }
