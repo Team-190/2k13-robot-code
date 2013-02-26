@@ -42,7 +42,7 @@ public class DrivetoLevel1 extends Command {
     protected boolean isFinished() {
         // We are done when either the MGA's say that we are on the bar, or
         // the command times out
-        return Robot.mGA.onBar() || isTimedOut();
+        return Robot.mGA.hooksBack() || isTimedOut();
     }
 
     protected void end() {

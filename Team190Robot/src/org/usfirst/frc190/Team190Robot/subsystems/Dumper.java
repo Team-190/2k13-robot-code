@@ -146,7 +146,7 @@ public class Dumper extends Subsystem {
         this.elbowPID.enable();
         this.elbowPID.setSetpoint(WOMBO_ELBOW);
         //wait to start the bucket moving
-        Timer.delay(0.2);
+        Timer.delay(0.1);
         this.bucketPID.setSetpoint(WOMBO_WRIST);
         this.bucketPID.enable();
         

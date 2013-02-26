@@ -214,7 +214,7 @@ public class OI {
         
         shooterSpeedUp = new AnalogButton(3.3, SHOOTER_PITCH_JOG);
         shooterSpeedDown = new AnalogButton(1.65, SHOOTER_PITCH_JOG);
-          
+         
         
         // SmartDashboard Buttons
         SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
@@ -229,7 +229,7 @@ public class OI {
 
         SmartDashboard.putData("OSHA Extend", new OSHAExtend());
 
-        SmartDashboard.putData("OSHA Retract", new OSHARetract());
+        SmartDashboard.putData("OSHA Retract", new OSHARetractInClimbing());
         
         SmartDashboard.putData("OSHA Retract on Pyramind", new OSHARetractInClimbing());
         

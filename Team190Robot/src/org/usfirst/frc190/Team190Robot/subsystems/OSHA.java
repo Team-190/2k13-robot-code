@@ -40,9 +40,9 @@ public class OSHA extends Subsystem {
     public static final boolean EXTENSION_OFF = true;
     
     //OSHA Speeds
-    public static final double OSHAFreeRetractSpeed = -0.25;
+    public static final double OSHAFreeRetractSpeed = -0.5;
     public static final double OSHALoadRetractSpeed = -1;
-    public static final double OSHAExtendSpeed = 0.3;
+    public static final double OSHAExtendSpeed = 0.825;
 
 
     public OSHA() {
@@ -89,7 +89,7 @@ public class OSHA extends Subsystem {
             }
             else{
                 //If we aren't we must be fighting
-                extension = EXTENSION_ON;
+                extension = EXTENSION_OFF;
             }
         } else if (this.isTensioned()){ // EXTENDING. WE NEED TENSION
             // Check to make sure we don't go past the upper limit.
