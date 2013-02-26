@@ -1,0 +1,26 @@
+Pre-WPI REGIONAL:
+-Tune bucked PID for new bucket
+-Tune shooter pitch PID
+-Tune shooter wheels PID
+-Test shooter
+-Figure out autonomous mode and write auto code
+-Finish wiring shooter
+-Mount shooter limit switch
+-Make smart dashboard layout
+-Make printf logger
+-Clean up printfs in code
+-Finish and test shooter code 
+-Write limit swtich debouncing code
+-Make competition box
+-Test and finish vision tracking
+
+
+AT WPI REGIONAL:
+-Check all PID tuning and setpoints
+-Finish/Clean up wiring
+-Test MGA limits and entire climb sequence
+-Test printf logger
+-Test shooting
+-Test frisbee pickup
+-Test Wombo Combo
+-Test autonomous
