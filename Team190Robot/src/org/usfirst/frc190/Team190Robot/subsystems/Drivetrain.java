@@ -31,7 +31,7 @@ public class Drivetrain extends Subsystem implements PIDOutput {
     private PIDController turningPID;
     
     //Drive speeds for level 1 climb
-    public static final double DRIVE_TO_LEVEL1_SPEED = -0.16;
+    public static final double DRIVE_TO_LEVEL1_SPEED = -0.4;
     
     // TODO: PID Tuning
     private final double kP = 0.0;

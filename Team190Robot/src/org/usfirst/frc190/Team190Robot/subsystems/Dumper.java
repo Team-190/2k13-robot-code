@@ -54,12 +54,12 @@ public class Dumper extends Subsystem {
     // bottom: 
     public final double FEEDER_SLOT_ELBOW = 1.98;
     public final double FEEDER_SLOT_WRIST = 0.0;
-    public final double STORE_ELBOW = 0.5;
+    public final double STORE_ELBOW = 1.25;
     public final double STORE_WRIST = 0.0;
-    public final double CLEAR_ELBOW = 0.9;
+    public final double CLEAR_ELBOW = 1.48;
     public final double CLEAR_WRIST = 0.0;
-    public final double WOMBO_ELBOW = 3.64;
-    public final double WOMBO_WRIST = -1.5;
+    public final double WOMBO_ELBOW = 4.8;
+    public final double WOMBO_WRIST = -0.7;
     
     // we start off stored
     private boolean isStored = true;
