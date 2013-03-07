@@ -5,6 +5,7 @@
 package org.usfirst.frc190.Team190Robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc190.Team190Robot.OI;
 import org.usfirst.frc190.Team190Robot.Robot;
 
@@ -16,15 +17,15 @@ public class ShooterStore extends Command {
     
     public ShooterStore() {
         requires(Robot.shooter);
-        OI.setLED(OI.SHOOTER_STORED_LED, true);
-        OI.setLED(OI.SHOOTER_COLLECT_LED, false);
-        OI.setLED(OI.SHOOTER_AUTO_LED, false);
-        OI.setLED(OI.SHOOTER_MANUAL_LED, false);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
         Robot.shooter.disableWheels();
+        OI.setLED(OI.SHOOTER_STORED_LED, true);
+        OI.setLED(OI.SHOOTER_COLLECT_LED, false);
+        OI.setLED(OI.SHOOTER_AUTO_LED, false);
+        OI.setLED(OI.SHOOTER_MANUAL_LED, false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -39,6 +40,7 @@ public class ShooterStore extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.shooter.stopPitch();
     }
 
     // Called when another command which requires one or more of the same

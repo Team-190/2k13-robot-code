@@ -10,8 +10,9 @@ public class ReadyForClimb extends CommandGroup{
     
     public ReadyForClimb() {
         //return all the subsystems to their stored states
-        //addParallel(new DumperStore());
+        addParallel(new DumperStore());
         addParallel(new MGARetract());
+        addParallel(new ShooterStore());
         addSequential(new OSHARetract());
         addSequential(new OSHAPivotBack());
         //TODO: add the reset command for the bumper bumpers

@@ -35,8 +35,8 @@ public class RobotMap {
     public static final int SHOOTER_FEEDER_SOLENDOID = 4;
     // Sensors
     public static final int SHOOTER_WHEEL_ENCODER = 11;
-    public static final int SHOOTER_PITCH_ENCODER_A = 12;
-    public static final int SHOOTER_PITCH_ENCODER_B = 6;
+    public static final int SHOOTER_PITCH_ENCODER_A = 10;
+    public static final int SHOOTER_PITCH_ENCODER_B = 9;
     public static final int SHOOTER_LOWER_LIMIT = 7;
     
 // MGA's

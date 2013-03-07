@@ -7,6 +7,7 @@ package org.usfirst.frc190.Team190Robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc190.Team190Robot.OI;
 import org.usfirst.frc190.Team190Robot.Robot;
+import org.usfirst.frc190.Team190Robot.subsystems.Shooter;
 
 /**
  *
@@ -14,11 +15,11 @@ import org.usfirst.frc190.Team190Robot.Robot;
  */
 public class ShooterAuto extends Command {
     
-    private static final double pitchJogUp = 0;
-    private static final double pitchJogDown = 0;
-    private static final double speedJogUp = 0;
-    private static final double speedJogDown = 0;
-    
+    private static final double pitchJogUp = 0.025;
+    private static final double pitchJogDown = 0.025;
+    private static final double speedJogUp = 10;
+    private static final double speedJogDown = 10;
+   
     private static double pitchJog = 0;
     private static double speedJog = 0;
     
@@ -28,14 +29,14 @@ public class ShooterAuto extends Command {
     
     public ShooterAuto() {
         requires(Robot.shooter);
-        OI.setLED(OI.SHOOTER_STORED_LED, false);
-        OI.setLED(OI.SHOOTER_COLLECT_LED, false);
-        OI.setLED(OI.SHOOTER_AUTO_LED, true);
-        OI.setLED(OI.SHOOTER_MANUAL_LED, false);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        OI.setLED(OI.SHOOTER_STORED_LED, false);
+        OI.setLED(OI.SHOOTER_COLLECT_LED, false);
+        OI.setLED(OI.SHOOTER_AUTO_LED, true);
+        OI.setLED(OI.SHOOTER_MANUAL_LED, false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -44,14 +45,6 @@ public class ShooterAuto extends Command {
             Robot.shooter.enableWheels();
         else
             Robot.shooter.disableWheels();
-        
-        if (!justTargeted && Robot.oi.getTarget())
-        {
-            //Get stuff from newtork tables and target
-            justTargeted = true;
-        }
-        else if (!Robot.oi.getTarget())
-            justTargeted = false;
         
         if (Robot.oi.shooterPitchUp.get())
             pitchJog += pitchJogUp;
@@ -63,8 +56,26 @@ public class ShooterAuto extends Command {
         else if (Robot.oi.shooterSpeedDown.get())
             speedJog -= speedJogDown;
         
+        /*if (!justTargeted && Robot.oi.getTarget())
+        {
+            //Get stuff from newtork tables and target
+            justTargeted = true;
+        }
+        else if (!Robot.oi.getTarget())
+            justTargeted = false;*/
+        speed = Shooter.IDEAL_WHEEL_SPEED;
+        pitch = Shooter.FEEDER_STATION_DISTANCE;
+        
+        speed += speedJog;
+        pitch += pitchJog;
+        
         Robot.shooter.setPitch(pitch);
         Robot.shooter.setSpeed(speed);
+        
+        if (Robot.shooter.isReadyToShoot())
+            OI.setLED(OI.SHOOTER_READY_LED, true);
+        else
+            OI.setLED(OI.SHOOTER_READY_LED, false);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -74,10 +85,16 @@ public class ShooterAuto extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.shooter.stopPitch();
+        Robot.shooter.disableWheels();
+        OI.setLED(OI.SHOOTER_READY_LED, false);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        Robot.shooter.stopPitch();
+        Robot.shooter.disableWheels();
+        OI.setLED(OI.SHOOTER_READY_LED, false);
     }
 }

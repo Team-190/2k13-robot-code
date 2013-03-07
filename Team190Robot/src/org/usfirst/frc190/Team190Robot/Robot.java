@@ -69,6 +69,8 @@ public class Robot extends IterativeRobot {
         autonomousCommand = new AutonomousCommand();
         
         compressor.start();
+        
+        shooter.checkZeroed();
        
         (new FirstClimb()).start();
         //SmartDashboard.putData("Scheduler", Scheduler.getInstance());
@@ -93,8 +95,7 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
         
-        Robot.dumper.bucketEncoder.zero();
-       
+        OI.updateLEDs();
         
     }
 
@@ -122,6 +123,6 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
-        System.out.println(Robot.dumper.bucketEncoder.getPosition());
+        //System.out.println(Robot.dumper.bucketEncoder.getPosition());
     }
 }

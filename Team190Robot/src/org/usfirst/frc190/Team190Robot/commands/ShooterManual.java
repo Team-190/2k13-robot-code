@@ -7,6 +7,7 @@ package org.usfirst.frc190.Team190Robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc190.Team190Robot.OI;
 import org.usfirst.frc190.Team190Robot.Robot;
+import org.usfirst.frc190.Team190Robot.subsystems.Shooter;
 
 /**
  *
@@ -14,10 +15,10 @@ import org.usfirst.frc190.Team190Robot.Robot;
  */
 public class ShooterManual extends Command {
     
-    private static final double pitchJogUp = 0;
-    private static final double pitchJogDown = 0;
-    private static final double speedJogUp = 0;
-    private static final double speedJogDown = 0;
+    private static final double pitchJogUp = 0.025;
+    private static final double pitchJogDown = 0.025;
+    private static final double speedJogUp = 10;
+    private static final double speedJogDown = 10;
     
     private static double pitchJog = 0;
     private static double speedJog = 0;
@@ -27,14 +28,14 @@ public class ShooterManual extends Command {
     
     public ShooterManual() {
         requires(Robot.shooter);
-        OI.setLED(OI.SHOOTER_STORED_LED, false);
-        OI.setLED(OI.SHOOTER_COLLECT_LED, false);
-        OI.setLED(OI.SHOOTER_AUTO_LED, false);
-        OI.setLED(OI.SHOOTER_MANUAL_LED, true);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        OI.setLED(OI.SHOOTER_STORED_LED, false);
+        OI.setLED(OI.SHOOTER_COLLECT_LED, false);
+        OI.setLED(OI.SHOOTER_AUTO_LED, false);
+        OI.setLED(OI.SHOOTER_MANUAL_LED, true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -55,10 +56,20 @@ public class ShooterManual extends Command {
             speedJog -= speedJogDown;
         
         //Set pitch and speed based on pot
-        //double manualSlide = Robot.io.getManualPot();
+        double manualSlide = Robot.oi.getShooterManualPot();
+        pitch = (1-(manualSlide/3.3))*Shooter.MAX_DISTANCE;
+        speed = Shooter.IDEAL_WHEEL_SPEED;
+        
+        pitch += pitchJog;
+        speed += speedJog;
         
         Robot.shooter.setPitch(pitch);
         Robot.shooter.setSpeed(speed);
+        
+        if (Robot.shooter.isReadyToShoot())
+            OI.setLED(OI.SHOOTER_READY_LED, true);
+        else
+            OI.setLED(OI.SHOOTER_READY_LED, false);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -68,10 +79,16 @@ public class ShooterManual extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.shooter.disableWheels();
+        Robot.shooter.stopPitch();
+        OI.setLED(OI.SHOOTER_READY_LED, false);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        Robot.shooter.disableWheels();
+        Robot.shooter.stopPitch();
+        OI.setLED(OI.SHOOTER_READY_LED, false);
     }
 }

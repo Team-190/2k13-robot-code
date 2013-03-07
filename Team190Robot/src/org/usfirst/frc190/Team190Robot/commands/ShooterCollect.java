@@ -17,15 +17,14 @@ public class ShooterCollect extends Command {
     
     public ShooterCollect() {
         requires(Robot.shooter);
-        OI.setLED(OI.SHOOTER_STORED_LED, false);
-        OI.setLED(OI.SHOOTER_COLLECT_LED, true);
-        OI.setLED(OI.SHOOTER_AUTO_LED, false);
-        OI.setLED(OI.SHOOTER_MANUAL_LED, false);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.shooter.setPitch(Shooter.COLLECT_ANGLE);
+        OI.setLED(OI.SHOOTER_STORED_LED, false);
+        OI.setLED(OI.SHOOTER_COLLECT_LED, true);
+        OI.setLED(OI.SHOOTER_AUTO_LED, false);
+        OI.setLED(OI.SHOOTER_MANUAL_LED, false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -34,6 +33,8 @@ public class ShooterCollect extends Command {
             Robot.shooter.enableWheels();
         else
             Robot.shooter.disableWheels();
+        
+        Robot.shooter.setPitch(Shooter.COLLECT_DISTANCE);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -43,10 +44,12 @@ public class ShooterCollect extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.shooter.stopPitch();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        Robot.shooter.stopPitch();
     }
 }

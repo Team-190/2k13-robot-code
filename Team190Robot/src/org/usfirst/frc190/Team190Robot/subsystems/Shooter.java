@@ -12,6 +12,7 @@ package org.usfirst.frc190.Team190Robot.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc190.Team190Robot.OI;
 import org.usfirst.frc190.Team190Robot.RobotMap;
 import org.usfirst.frc190.Team190Robot.misc.SingleChannelEncoder;
@@ -26,64 +27,99 @@ public class Shooter extends Subsystem {
     private SpeedController pitchVictor = new Victor(RobotMap.SHOOTER_PITCH_VICTOR);
     private Solenoid feederSolenoid = new Solenoid(RobotMap.SHOOTER_FEEDER_SOLENDOID);
     // Sensors
-    private SingleChannelEncoder wheelEncoder = new SingleChannelEncoder(RobotMap.SHOOTER_WHEEL_ENCODER);
+    private Encoder wheelEncoder = new Encoder(11,12);
     private Encoder pitchEncoder = new Encoder(RobotMap.SHOOTER_PITCH_ENCODER_A, RobotMap.SHOOTER_PITCH_ENCODER_B);
     private DigitalInput pitchLowerLimit = new DigitalInput(RobotMap.SHOOTER_LOWER_LIMIT);
     // PID Controllers
-    private PIDController wheelPID = new PIDController(kP_WHEEL, kI_WHEEL, kD_WHEEL, kF_WHEEL, wheelEncoder, wheelVictors);
+    private PIDController wheelPID;
     private PIDController pitchPID = new PIDController(kP_PIVOT, kI_PIVOT, kD_PIVOT, pitchEncoder, pitchVictor);
     // Feeder Positions
-    public static final boolean FEEDER_FEED = true;
-    public static final boolean FEEDER_RETRACT = false;
+    public static final boolean FEEDER_FEED = false;
+    public static final boolean FEEDER_RETRACT = true;
     // PID Constants
     // TODO: Tune PID Loops
-    public static final double kP_WHEEL = 1.0;
+    public static final double kP_WHEEL = 0.006;
     public static final double kI_WHEEL = 0;
     public static final double kD_WHEEL = 0;
-    public static final double kF_WHEEL = 0;
-    public static final double kP_PIVOT = 0;
+    public static final double kF_WHEEL = 0.00025;
+    public static final double kP_PIVOT = -2;
     public static final double kI_PIVOT = 0;
     public static final double kD_PIVOT = 0;
     
-    public static final double COLLECT_ANGLE = 0;
-    // Angle Constants
-    // TODO: Find as many angle constants as possible
+    public static final double MAX_DISTANCE = 13.3;
+    public static final double COLLECT_DISTANCE = 6;
+    public static final double AUTONOMOUS_DISTANCE = 11.75;
+    public static final double FEEDER_STATION_DISTANCE = 12;
+    
+    public static final double IDEAL_WHEEL_SPEED = 3400;
     
     
-    // Ture if the pitch is zeroed, Can't use pitch PID until the pitch is zeroed
+    // True if the pitch is zeroed, Can't use pitch PID until the pitch is zeroed
     public boolean pitchZeroed = false;
-
+    private double m_rate = 0;
+    
+    
     public Shooter() {
         // Set up the encoders
-        wheelEncoder.countsPerRevolution(1);
+        wheelEncoder.setDistancePerPulse(60.0/250.0); //Revolutions * 60
+        wheelEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
+        wheelEncoder.setReverseDirection(true);
         wheelEncoder.start();
-        pitchEncoder.setDistancePerPulse(1.0);
-        pitchEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
+        pitchEncoder.setDistancePerPulse(0.002);
+        pitchEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
         pitchEncoder.start();
 
+        
+        wheelPID = new PIDController(kP_WHEEL, kI_WHEEL, kD_WHEEL, kF_WHEEL, new PIDSource() {     
+            public double pidGet()
+            {
+                return m_rate;
+            }
+        }, wheelVictors);
+                
+       new Thread() {
+            
+            public synchronized void run() {
+                long timer= System.currentTimeMillis();
+                wheelEncoder.reset();
+                while (true) {
+                    
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                    
+                    m_rate = 1000*(wheelEncoder.getDistance() / (double) (System.currentTimeMillis() - timer));//*1.0577;                                    
+                    //System.out.println("Real Shooter Speed: "+(-m_rate));
+                    SmartDashboard.putNumber("Wheels Speed", m_rate);
+                    
+                    wheelEncoder.reset();
+                    //System.out.println("A: " + EncoderA.get() + ", B: " + EncoderB.get());
+                    timer = System.currentTimeMillis();
+                }
+            }
+        }.start();
+        
+        
         // Set up PID Controllers
         wheelPID.setContinuous(false);
-        wheelPID.setAbsoluteTolerance(0.2);
-        wheelPID.setOutputRange(-1.0, 1.0);
+        wheelPID.setAbsoluteTolerance(50);
+        wheelPID.setOutputRange(0.0, 1.0);
         pitchPID.setContinuous(false);
-        pitchPID.setAbsoluteTolerance(0.2);
+        pitchPID.setAbsoluteTolerance(0.1);
+        pitchPID.setInputRange(0, MAX_DISTANCE);
         pitchPID.setOutputRange(-1.0, 1.0);
 
         // Add the components to LiveWindow
         LiveWindow.addActuator("Shooter", "Wheel Victors (2)", (Victor) wheelVictors);
-        LiveWindow.addSensor("Shooter", "Wheel Encoder", wheelEncoder);
+        LiveWindow.addSensor("Shooter", "Wheel Encoder2", wheelEncoder);
         LiveWindow.addActuator("Shooter", "Wheels PID", wheelPID);
         LiveWindow.addSensor("Shooter", "Pitch Encoder", pitchEncoder);
         LiveWindow.addActuator("Shooter", "Pitch Victor", (Victor) pitchVictor);
         LiveWindow.addActuator("Shooter", "Pitch PID", pitchPID);
         LiveWindow.addSensor("Shooter", "Pitch Lower Limit", pitchLowerLimit);
         LiveWindow.addActuator("Shooter", "Feeder Solenoid", feederSolenoid);
-        
-        if (pitchLowerLimit.get())
-        {
-            pitchZeroed = true;
-            OI.setLED(OI.SHOOTER_STORED_LED, true);
-        }
     }
 
     // Put methods for controlling this subsystem
@@ -97,21 +133,29 @@ public class Shooter extends Subsystem {
      *
      * @param angle The angle to set the pitch to
      */
-    public void setPitch(double angle) {
+    public void setPitch(double distance) {
+        SmartDashboard.putNumber("Pitch Screw Length", pitchEncoder.getDistance());
         if (pitchZeroed)
         {
-            pitchPID.setSetpoint(convertPitchToRotations(angle));
-            pitchPID.enable();
+            pitchPID.setSetpoint(distance);
+            if (pitchPID.onTarget())
+                pitchPID.disable();
+            else
+                pitchPID.enable();
         }
+        else
+            pitchPID.disable();
     }
     
     public void zeroPitch()
     {
+        SmartDashboard.putNumber("Pitch Screw Length", pitchEncoder.getDistance());
         pitchPID.disable();
         if (!pitchLowerLimit.get())   
-            pitchVictor.set(-1);
+            pitchVictor.set(1);
         else
         {
+            pitchEncoder.reset();
             pitchZeroed = true;
             pitchVictor.set(0);
         }
@@ -119,7 +163,9 @@ public class Shooter extends Subsystem {
     
     public void stopPitch()
     {
+        SmartDashboard.putNumber("Pitch Screw Length", pitchEncoder.getDistance());
         pitchVictor.set(0);
+        pitchPID.disable();
     }
 
     /**
@@ -130,7 +176,6 @@ public class Shooter extends Subsystem {
      */
     public void setSpeed(double speed) {
         wheelPID.setSetpoint(speed);
-        wheelPID.enable();
     }
 
     /**
@@ -170,5 +215,19 @@ public class Shooter extends Subsystem {
 
     public void enableWheels() {
         wheelPID.enable();
+    }
+
+    public void checkZeroed() {
+        if (pitchLowerLimit.get())
+        {
+            pitchZeroed = true;
+            OI.setLED(OI.SHOOTER_STORED_LED, true);
+        }
+    }
+    
+    public void feed(boolean feed)
+    {
+        feederSolenoid.set(feed);
+        SmartDashboard.putBoolean("Feed Cylinder", feed);
     }
 }
