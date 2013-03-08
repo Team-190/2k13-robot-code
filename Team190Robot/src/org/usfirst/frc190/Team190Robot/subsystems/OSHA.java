@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc190.Team190Robot.Robot;
 import org.usfirst.frc190.Team190Robot.RobotMap;
 import org.usfirst.frc190.Team190Robot.commands.*;
+import org.usfirst.frc190.Team190Robot.misc.LimitSwitch;
 
 /**
  *
@@ -31,7 +32,7 @@ public class OSHA extends Subsystem {
     private SpeedController winchVictor = new Victor(RobotMap.OSHA_WINCH_VICTOR);
     // Sensors
     private DigitalInput winchUpperLimit = new DigitalInput(RobotMap.OSHA_UPPER_LIMIT);
-    private DigitalInput winchLowerLimit = new DigitalInput(RobotMap.OSHA_LOWER_LIMIT);
+    private DigitalInput winchLowerLimit = new LimitSwitch(RobotMap.OSHA_LOWER_LIMIT, .1);
     private DigitalInput tensiometer = new DigitalInput(RobotMap.OSHA_TENSIOMETER);
     // OSHA Constants
     public static final boolean OSHA_FORWARD = false;

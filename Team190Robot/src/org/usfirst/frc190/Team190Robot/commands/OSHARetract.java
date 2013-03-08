@@ -54,7 +54,8 @@ public class  OSHARetract extends Command {
         }
         /*if (!Robot.oSHA.isTensioned())
         {
-            System.out.println("OSHA Retract exited with No Tension");
+            Sy
+            * stem.out.println("OSHA Retract exited with No Tension");
             return true;
         }*/
         return false;

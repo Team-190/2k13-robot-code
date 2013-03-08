@@ -52,7 +52,7 @@ public class Dumper extends Subsystem {
     // Position Constants
     // top: 
     // bottom: 
-    public final double FEEDER_SLOT_ELBOW = 1.98;
+    public final double FEEDER_SLOT_ELBOW = 1.48;
     public final double FEEDER_SLOT_WRIST = 0.0;
     public final double STORE_ELBOW = 1.25;
     public final double STORE_WRIST = 0.0;
@@ -128,7 +128,7 @@ public class Dumper extends Subsystem {
     }
 
     public void goClear(){
-        isStored = false;
+        isStored = true;
         //this.bucketPID.setSetpoint(CLEAR_WRIST);
         this.elbowPID.setSetpoint(CLEAR_ELBOW);
         //this.bucketPID.enable();
@@ -153,13 +153,13 @@ public class Dumper extends Subsystem {
     }
     public void goStore(){
         isStored = true;
-        this.bucketPID.setSetpoint(STORE_WRIST);
+        //this.bucketPID.setSetpoint(STORE_WRIST);
         this.elbowPID.setSetpoint(STORE_ELBOW);
-        this.bucketPID.enable();
+        //this.bucketPID.enable();
         this.elbowPID.enable();
     }
     public boolean isDone(){
-        return this.bucketPID.onTarget() && this.elbowPID.onTarget();
+        return /*this.bucketPID.onTarget() &&*/ this.elbowPID.onTarget();
     }
     public boolean isStored()
     {

@@ -218,7 +218,7 @@ public class OI {
         shooterSpeedDown = new AnalogButton(1.65, SHOOTER_PITCH_JOG);
          
         shootButton = new DigitalIOButton(SHOOTER_SHOOT_BUTTON);
-        shootButton.whenPressed(new Shoot());
+        //shootButton.whenPressed(new Shoot());
         
         
         // SmartDashboard Buttons

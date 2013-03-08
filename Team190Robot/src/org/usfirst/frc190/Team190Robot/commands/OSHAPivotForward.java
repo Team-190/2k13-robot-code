@@ -29,7 +29,7 @@ public class  OSHAPivotForward extends Command {
         requires(Robot.oSHA);
         
         // TODO: Time this process
-        this.setTimeout(4.0);
+        this.setTimeout(2.0);
     }
 
     // Called just before this Command runs the first time

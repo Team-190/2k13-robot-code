@@ -38,10 +38,10 @@ public class Shooter extends Subsystem {
     public static final boolean FEEDER_RETRACT = true;
     // PID Constants
     // TODO: Tune PID Loops
-    public static final double kP_WHEEL = 0.006;
+    public static final double kP_WHEEL = -0.006;
     public static final double kI_WHEEL = 0;
     public static final double kD_WHEEL = 0;
-    public static final double kF_WHEEL = 0.00025;
+    public static final double kF_WHEEL = -0.00025;
     public static final double kP_PIVOT = -2;
     public static final double kI_PIVOT = 0;
     public static final double kD_PIVOT = 0;
@@ -51,7 +51,7 @@ public class Shooter extends Subsystem {
     public static final double AUTONOMOUS_DISTANCE = 11.75;
     public static final double FEEDER_STATION_DISTANCE = 12;
     
-    public static final double IDEAL_WHEEL_SPEED = 3400;
+    public static final double IDEAL_WHEEL_SPEED = -3400;
     
     
     // True if the pitch is zeroed, Can't use pitch PID until the pitch is zeroed
