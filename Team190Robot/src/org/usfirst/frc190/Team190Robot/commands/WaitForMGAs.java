@@ -26,6 +26,7 @@ public class WaitForMGAs extends Command {
     protected void initialize() {
         wereBack = false;
         timer = new Timer();
+        timer.start();
     }
 
     protected void execute() {
@@ -47,7 +48,7 @@ public class WaitForMGAs extends Command {
             return true;
         }*/
         
-        return Robot.mGA.leftOnBar() && Robot.mGA.rightOnBar();
+        return Robot.mGA.leftOnBar() && Robot.mGA.rightOnBar() && timer.get() > 0.5;
     }
 
     protected void end() {

@@ -80,7 +80,7 @@ public class MGA extends Subsystem {
      * @return True if the left MGA is on a bar, false otherwise
      */
     public boolean leftOnBar(){
-        return !leftArmLimit.get();
+        return leftArmLimit.get();
     }
     
     /**
@@ -88,7 +88,7 @@ public class MGA extends Subsystem {
      * @return True if the left MGA is the bar, false otherwise
      */
     public boolean rightOnBar(){
-        return !rightArmLimit.get();
+        return rightArmLimit.get();
     }
 }
 

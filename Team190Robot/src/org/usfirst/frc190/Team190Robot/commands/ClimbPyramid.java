@@ -40,18 +40,20 @@ public class ClimbPyramid extends CommandGroup {
         
         
         this.setInterruptible(false);
-        addParallel(new TankDrive());
+        /*addParallel(new TankDrive());
         addSequential(new ReadyForClimb());
         // Wait for the user to get under the pyramid
         addSequential(new WaitForNext());
         // We are under the pyramid, so start the level 1 climb
         addSequential(new Level1());
         // Wait for the user to start the level 2 climb
-        addSequential(new WaitForNext());
+        addSequential(new WaitForNext());*/
         
-        // We are now on level 2, so climb the next level
+        addSequential(new OSHAPivotBack());
+        
+        // We are now on level 1, so climb the next level
         addSequential(new ClimbLevel());
-        // Wait for the user to start the level 3 climb
+        // Wait for the user to start the level 2 climb
         addSequential(new WaitForNext());
         
         // We are now on level 2, so start the level 3 climb
