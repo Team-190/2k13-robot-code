@@ -55,8 +55,6 @@ public class WaitForMGAs extends Command {
         
         if (this.isTimedOut())
             ClimbPyramid.Abort("the MGAs never latched onto the bar in the wait for MGAs");
-        else
-            OSHARetractInClimbing.kill = true;
     }
 
     protected void interrupted() {

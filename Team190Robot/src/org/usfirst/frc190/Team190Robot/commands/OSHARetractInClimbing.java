@@ -11,6 +11,7 @@
 
 package org.usfirst.frc190.Team190Robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc190.Team190Robot.Robot;
 import org.usfirst.frc190.Team190Robot.RobotMap;
@@ -20,7 +21,7 @@ import org.usfirst.frc190.Team190Robot.RobotMap;
  */
 public class  OSHARetractInClimbing extends Command {
 
-    static boolean kill = false;
+    Timer timer;
     public OSHARetractInClimbing() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -33,7 +34,7 @@ public class  OSHARetractInClimbing extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        
+        timer = new Timer();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -53,8 +54,9 @@ public class  OSHARetractInClimbing extends Command {
             System.out.println("OSHA Retract exited with Limit");
             return true;
         }
-        if (kill){
-            System.out.println("Killed because MGAs on bar");
+        if (Robot.mGA.leftOnBar() && Robot.mGA.rightOnBar() && timer.get() > 1.0) //are we on the bar?
+        {
+            System.out.println("OSHA Retract exited because the MGAs are on the bar");
             return true;
         }
         return false;
@@ -64,10 +66,9 @@ public class  OSHARetractInClimbing extends Command {
     // This command should never end, it should always be interrupted by StopOSHA
     protected void end() {
         Robot.oSHA.driveOSHA(0, false);
-        if(!kill){
-            ClimbPyramid.Abort("the MGAs never latched onto the bar in the OSHA retract");
+        if(this.isTimedOut()){
+            ClimbPyramid.Abort("the OSHA never finished its extension");
         }
-        kill = false;
         
     }
 

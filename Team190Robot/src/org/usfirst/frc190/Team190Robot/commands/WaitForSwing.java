@@ -4,6 +4,7 @@
  */
 package org.usfirst.frc190.Team190Robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc190.Team190Robot.Robot;
 
@@ -17,18 +18,19 @@ import org.usfirst.frc190.Team190Robot.Robot;
 public class WaitForSwing extends Command {
     
     private double startAngle;
-    
+    Timer timer;
     public WaitForSwing(){
         // The gyro is in the drivetrain
         requires(Robot.drivetrain);
-        
+        timer = new Timer();
         // TODO: Find the correct timeout
-        setTimeout(10);
+        setTimeout(3);
     }
 
     protected void initialize() {
         // Get the current angle and set error to be 0
         startAngle = Robot.drivetrain.curSwing();
+        timer.start();
     }
 
     protected void execute() {
@@ -40,13 +42,12 @@ public class WaitForSwing extends Command {
         // Returns whether our total swing means that we have come off the
         // bar, or if we have timed out
         //System.out.println("Error: " + Math.abs(startAngle - Robot.drivetrain.curSwing()));
-        return Math.abs(startAngle - Robot.drivetrain.curSwing()) > 5 || isTimedOut();
+        return (Math.abs(startAngle - Robot.drivetrain.curSwing()) > 5 && timer.get() > 1.0) 
+                || isTimedOut();
     }
 
     protected void end() {
         System.out.println("Wait for swing exiting");
-        if (this.isTimedOut())
-            ClimbPyramid.Abort("the swing never happened");
     }
 
     protected void interrupted() {
