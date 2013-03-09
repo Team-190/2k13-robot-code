@@ -29,22 +29,25 @@ public class WaitForMGAs extends Command {
     }
 
     protected void execute() {
-        if (Robot.mGA.hooksBack() && !wereBack){
+        /*if (Robot.mGA.hooksBack() && !wereBack){
             wereBack = true;
             timer.start();
-        }
+        }*/
+        
+        //do nothing woolooloo
     }
 
     protected boolean isFinished() {
-        if(wereBack && !Robot.mGA.hooksBack() && timer.get() > 0.25){
+        /*if(wereBack && !Robot.mGA.hooksBack() && timer.get() > 0.25){
             System.out.println("Wait for MGAs exiting on bar");
             return true;
         }
         else if(isTimedOut()){
             System.out.println("Wait for MGAs timed out");
             return true;
-        }
-        return false;
+        }*/
+        
+        return Robot.mGA.leftOnBar() && Robot.mGA.rightOnBar();
     }
 
     protected void end() {
