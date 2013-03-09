@@ -15,19 +15,20 @@ public class LimitSwitch extends DigitalInput {
     
     double changeTime;
     boolean lastValue = true;
-    boolean waiting = false;
     Timer changeTimer = new Timer();
     
     public LimitSwitch(int port)
     {
         super (port);
         changeTime = 0;
+        changeTimer.start();
     }
     
     public LimitSwitch(int port, double changeTime)
     {
         super(port);
         this.changeTime = changeTime;
+        changeTimer.start();
     }
     
     public boolean get()
@@ -35,20 +36,14 @@ public class LimitSwitch extends DigitalInput {
         boolean newValue = super.get();
         if (newValue != lastValue)
         {
-            if (waiting && changeTimer.get() >= changeTime)
-            {
+            if (changeTimer.get() >= changeTime)
                 lastValue = newValue;
-                waiting = false;
-            }
-            else if (!waiting)
-            {
-                waiting = true;
-                changeTimer.reset();
-                changeTimer.start();
-            }
         }
-        else if (waiting)
-            waiting = false;   
+        else
+        {
+            changeTimer.reset();
+            changeTimer.start();
+        }
         
         return lastValue;
     }

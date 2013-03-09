@@ -36,7 +36,7 @@ public class WaitForMGAs extends Command {
     }
 
     protected boolean isFinished() {
-        if(wereBack && !Robot.mGA.hooksBack() && timer.get() > 0.5){
+        if(wereBack && !Robot.mGA.hooksBack() && timer.get() > 0.25){
             System.out.println("Wait for MGAs exiting on bar");
             return true;
         }

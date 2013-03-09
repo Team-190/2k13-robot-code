@@ -35,7 +35,7 @@ public class  OSHAPivotForward extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         Robot.oSHA.setPosition(OSHA.OSHA_FORWARD);
-        if(!Robot.dumper.isStored())
+        if(Robot.dumper.isStored())
             Robot.dumper.goStore();
     }
 

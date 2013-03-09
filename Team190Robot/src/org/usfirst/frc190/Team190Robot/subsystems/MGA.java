@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc190.Team190Robot.RobotMap;
 import org.usfirst.frc190.Team190Robot.commands.*;
+import org.usfirst.frc190.Team190Robot.misc.LimitSwitch;
 
 
 /**
@@ -29,8 +30,8 @@ public class MGA extends Subsystem {
     
     // Sensors
     // TODO: Figure out final position of the limit switches
-    private DigitalInput leftArmLimit = new DigitalInput(RobotMap.MGA_LEFT_LIMIT);
-    private DigitalInput rightArmLimit = new DigitalInput(RobotMap.MGA_RIGHT_LIMIT);
+    private DigitalInput leftArmLimit = new LimitSwitch(RobotMap.MGA_LEFT_LIMIT, .1);
+    private DigitalInput rightArmLimit = new LimitSwitch(RobotMap.MGA_RIGHT_LIMIT, .1);
 
     // Constants for the MGA's positions
     public static final boolean MGA_UP = true;

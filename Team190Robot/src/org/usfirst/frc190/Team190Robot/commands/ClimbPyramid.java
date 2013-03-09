@@ -4,6 +4,9 @@
  */
 package org.usfirst.frc190.Team190Robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStationLCD;
+import edu.wpi.first.wpilibj.DriverStationLCD.Line;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc190.Team190Robot.OI;
 import org.usfirst.frc190.Team190Robot.Robot;
@@ -96,6 +99,7 @@ public class ClimbPyramid extends CommandGroup {
     {
         if (runningInstance != null)
         {
+            DriverStationLCD.getInstance().println(Line.kUser1, 1, abortString);
             System.out.println("Oh noes! We aborted because " + abortString + " :(");
             runningInstance.cancel();
             runningInstance = null;

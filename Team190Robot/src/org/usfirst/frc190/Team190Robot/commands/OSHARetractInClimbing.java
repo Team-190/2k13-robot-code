@@ -28,7 +28,7 @@ public class  OSHARetractInClimbing extends Command {
         requires(Robot.oSHA);
         
         // TODO: Time this process
-        this.setTimeout(6);
+        this.setTimeout(10);
     }
 
     // Called just before this Command runs the first time

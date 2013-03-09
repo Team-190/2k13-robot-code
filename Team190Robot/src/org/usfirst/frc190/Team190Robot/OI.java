@@ -164,7 +164,7 @@ public class OI {
          * OSHA commands
          */
         oshaDown = new AnalogButton(1.65, OSHA_UP_DOWN);
-        oshaDown.whileHeld(new OSHARetract());
+        oshaDown.whileHeld(new OSHARetractInClimbing());
         
         oshaUp = new AnalogButton(3.3, OSHA_UP_DOWN);
         oshaUp.whileHeld(new OSHAExtend());

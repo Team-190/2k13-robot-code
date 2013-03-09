@@ -52,11 +52,11 @@ public class Dumper extends Subsystem {
     // Position Constants
     // top: 
     // bottom: 
-    public final double FEEDER_SLOT_ELBOW = 1.48;
+    public final double FEEDER_SLOT_ELBOW = 1.6;
     public final double FEEDER_SLOT_WRIST = 0.0;
     public final double STORE_ELBOW = 1.25;
     public final double STORE_WRIST = 0.0;
-    public final double CLEAR_ELBOW = 1.48;
+    public final double CLEAR_ELBOW = 1.6;
     public final double CLEAR_WRIST = 0.0;
     public final double WOMBO_ELBOW = 4.8;
     public final double WOMBO_WRIST = -0.7;
@@ -79,12 +79,6 @@ public class Dumper extends Subsystem {
         // Add components to the live window
         LiveWindow.addActuator("Dumper", "Bucket Motor", (Victor) bucketMotor);
         LiveWindow.addActuator("Dumper", "Bucket PID", bucketPID);
-        try{
-            LiveWindow.addSensor("Dumper", "Bucket Encoder", bucketEncoder);
-        }
-        catch(Exception ex){
-            ex.printStackTrace();
-        }
         LiveWindow.addActuator("Dumper", "Elbow Motor", (Victor) elbowMotor);
         LiveWindow.addSensor("Dumper", "Elbow Pot", elbowPot);
         LiveWindow.addActuator("Dumper", "Elbow PID", elbowPID);
