@@ -29,7 +29,7 @@ public class  OSHAPivotBack extends Command {
         requires(Robot.oSHA);
         
         // TODO: Time this process
-        this.setTimeout(3.0);
+        this.setTimeout(2.0);
     }
 
     // Called just before this Command runs the first time
@@ -39,7 +39,7 @@ public class  OSHAPivotBack extends Command {
         
         Robot.oSHA.setPosition(OSHA.OSHA_BACKWARD);
         if(Robot.dumper.isStored())
-            Robot.dumper.goClear();
+            Robot.dumper.clear();
     }
 
     // Called repeatedly when this Command is scheduled to run

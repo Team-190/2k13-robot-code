@@ -13,6 +13,11 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc190.Team190Robot.RobotMap;
+import org.usfirst.frc190.Team190Robot.commands.DeWomboCombo;
+import org.usfirst.frc190.Team190Robot.commands.DumperClear;
+import org.usfirst.frc190.Team190Robot.commands.DumperCollect;
+import org.usfirst.frc190.Team190Robot.commands.DumperScore;
+import org.usfirst.frc190.Team190Robot.commands.DumperStore;
 import org.usfirst.frc190.Team190Robot.misc.ExtensiblePIDController;
 import org.usfirst.frc190.Team190Robot.misc.GravityCompensationTerm;
 import org.usfirst.frc190.Team190Robot.misc.VexEncoder;
@@ -21,7 +26,13 @@ import org.usfirst.frc190.Team190Robot.misc.VexEncoder;
  *
  */
 public class Dumper extends Subsystem {
-
+    // statefulness
+    private static DumperClear clear = new DumperClear();
+    private static DumperCollect collect = new DumperCollect();
+    private static DumperScore score = new DumperScore();
+    private static DumperStore store = new DumperStore();
+    private static DeWomboCombo dewombo = new DeWomboCombo();
+    
     // Motors
     private SpeedController bucketMotor = new Victor(RobotMap.DUMPER_BUCKET_VICTOR);
     private SpeedController elbowMotor = new Victor(RobotMap.DUMPER_ELBOW_VICTOR);
@@ -40,7 +51,7 @@ public class Dumper extends Subsystem {
 
     // PID Constants
     // TODO: Tune Constants
-    private static final double kP_BUCKET = 3.0;
+    private static final double kP_BUCKET = 5.0;
     private static final double kI_BUCKET = 0.020;
     private static final double kD_BUCKET = 0;
     private static final double kP_ELBOW = 1.5;
@@ -52,14 +63,17 @@ public class Dumper extends Subsystem {
     // Position Constants
     // top: 
     // bottom: 
-    public final double FEEDER_SLOT_ELBOW = 1.6;
-    public final double FEEDER_SLOT_WRIST = 0.0;
-    public final double STORE_ELBOW = 1.25;
+    /*
+    public final double FEEDER_SLOT_ELBOW = 1.5;
+    public final double FEEDER_SLOT_WRIST = -.437; */
+    public final double FEEDER_SLOT_ELBOW = 1.8;
+    public final double FEEDER_SLOT_WRIST = -1.65;
+    public final double STORE_ELBOW = 1.13;
     public final double STORE_WRIST = 0.0;
-    public final double CLEAR_ELBOW = 1.6;
+    public final double CLEAR_ELBOW = 1.5;
     public final double CLEAR_WRIST = 0.0;
-    public final double WOMBO_ELBOW = 4.8;
-    public final double WOMBO_WRIST = -0.7;
+    public final double WOMBO_ELBOW = 3.68;
+    public final double WOMBO_WRIST = -1.5;
     
     // we start off stored
     private boolean isStored = true;
@@ -68,11 +82,11 @@ public class Dumper extends Subsystem {
         
         // Set up PID Controllers
         bucketPID.setContinuous(false); 
-        bucketPID.setAbsoluteTolerance(0.2); 
+        bucketPID.setAbsoluteTolerance(0.025); 
         bucketPID.setOutputRange(-1.0, 1.0);
         elbowPID.setContinuous(false); 
-        elbowPID.setAbsoluteTolerance(0.2); 
-        elbowPID.setOutputRange(-0.3, 0.8); 
+        elbowPID.setAbsoluteTolerance(0.05); 
+        elbowPID.setOutputRange(-0.3, 0.6); 
         elbowPID.addTerm(new GravityCompensationTerm(kG_ELBOW, T_ELBOW));
        
         
@@ -117,47 +131,154 @@ public class Dumper extends Subsystem {
     public void stopMovement(){
         bucketPID.setSetpoint(bucketEncoder.getPosition());
         elbowPID.setSetpoint(elbowPot.getAverageVoltage());
+        bucketMotor.set(0.0);
+        elbowMotor.set(0.0);
         bucketPID.disable();
         elbowPID.disable();
     }
 
-    public void goClear(){
-        isStored = true;
-        //this.bucketPID.setSetpoint(CLEAR_WRIST);
+    public void goClearBucket(){
+        isStored = false;
+        this.bucketPID.setSetpoint(CLEAR_WRIST);
+        this.bucketPID.enable();
+    }
+    public void goClearElbow(){
+        isStored = false;
         this.elbowPID.setSetpoint(CLEAR_ELBOW);
-        //this.bucketPID.enable();
         this.elbowPID.enable();
     }
-    public void goCollect(){
+    public void goCollectElbow(){
+        isStored = false;
+        this.elbowPID.setSetpoint(FEEDER_SLOT_ELBOW);
+        this.elbowPID.enable();
+    }
+    public void goCollectBucket(){
         isStored = false;
         this.bucketPID.setSetpoint(FEEDER_SLOT_WRIST);
-        this.elbowPID.setSetpoint(FEEDER_SLOT_ELBOW);
         this.bucketPID.enable();
-        this.elbowPID.enable();
     }
     public void goScore(){
         isStored = false;
         this.elbowPID.enable();
         this.elbowPID.setSetpoint(WOMBO_ELBOW);
         //wait to start the bucket moving
-        Timer.delay(0.1);
+        Timer.delay(0.3);
         this.bucketPID.setSetpoint(WOMBO_WRIST);
         this.bucketPID.enable();
         
     }
-    public void goStore(){
+    public void goStoreElbow(){
         isStored = true;
-        //this.bucketPID.setSetpoint(STORE_WRIST);
         this.elbowPID.setSetpoint(STORE_ELBOW);
-        //this.bucketPID.enable();
         this.elbowPID.enable();
     }
+    public void goStoreBucket(){
+        isStored = true;
+        this.bucketPID.setSetpoint(STORE_WRIST);
+        this.bucketPID.enable();
+        this.bucketPID.enable();
+    }
     public boolean isDone(){
-        return /*this.bucketPID.onTarget() &&*/ this.elbowPID.onTarget();
+        return (!this.bucketPID.isEnable() || this.bucketPID.onTarget()) 
+                && (!this.elbowPID.isEnable() || this.elbowPID.onTarget());
     }
     public boolean isStored()
     {
         return isStored;
+    }
+    
+    /*
+     * FUNCTIONS TO MOVE DUMPER AROUND
+     */
+    public void store(){
+        if(this.clear.isRunning()){
+            this.clear.cancel();
+        }
+        if(this.collect.isRunning()){
+            this.collect.cancel();
+        }
+        if(this.score.isRunning()){
+            this.score.cancel();
+        }
+        if(dewombo.isRunning()){
+            this.dewombo.cancel();
+        }
+        if(!this.store.isRunning()){
+            this.store.start();
+        }   
+        this.isStored = true;
+    }
+    public void score(){
+        if(this.clear.isRunning()){
+            this.clear.cancel();
+        }
+        if(this.collect.isRunning()){
+            this.collect.cancel();
+        }
+        if(this.store.isRunning()){
+            this.store.cancel();
+        }
+        if(dewombo.isRunning()){
+            this.dewombo.cancel();
+        }
+        if(!this.score.isRunning()){
+            this.score.start();
+        }
+        this.isStored = false;
+    }
+    public void clear(){
+        if(this.collect.isRunning()){
+            this.collect.cancel();
+        }
+        if(this.score.isRunning()){
+            this.score.cancel();
+        }
+        if(this.store.isRunning()){
+            this.store.cancel();
+        }
+        if(dewombo.isRunning()){
+            this.dewombo.cancel();
+        }
+        if(!this.clear.isRunning()){
+            this.clear.start();
+        }
+        this.isStored = false;
+    }
+    public void collect(){
+        if(this.clear.isRunning()){
+            this.clear.cancel();
+        }
+        if(this.score.isRunning()){
+            this.score.cancel();
+        }
+        if(this.store.isRunning()){
+            this.store.cancel();
+        }
+        if(dewombo.isRunning()){
+            this.dewombo.cancel();
+        }
+        if(!this.collect.isRunning()){
+            this.collect.start();
+        }
+        this.isStored = false;
+    }
+    public void dewombo(){
+        if(this.clear.isRunning()){
+            this.clear.cancel();
+        }
+        if(this.collect.isRunning()){
+            this.collect.cancel();
+        }
+        if(this.score.isRunning()){
+            this.score.cancel();
+        }
+        if(this.store.isRunning()){
+            this.store.cancel();
+        }
+        if(!dewombo.isRunning()){
+            this.dewombo.start();
+        }
+        this.isStored = false;
     }
     
     

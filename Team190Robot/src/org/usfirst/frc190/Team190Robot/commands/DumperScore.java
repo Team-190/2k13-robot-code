@@ -22,7 +22,6 @@ import org.usfirst.frc190.Team190Robot.Robot;
 public class  DumperScore extends Command {
 
     public DumperScore() {
-        requires(Robot.dumper);
     }
 
     // Called just before this Command runs the first time

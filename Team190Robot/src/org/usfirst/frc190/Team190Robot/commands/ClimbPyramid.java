@@ -49,8 +49,6 @@ public class ClimbPyramid extends CommandGroup {
         // Wait for the user to start the level 2 climb
         addSequential(new WaitForNext());*/
         
-        addSequential(new OSHAPivotBack());
-        
         // We are now on level 1, so climb the next level
         addSequential(new ClimbLevel());
         // Wait for the user to start the level 2 climb
@@ -59,6 +57,10 @@ public class ClimbPyramid extends CommandGroup {
         // We are now on level 2, so start the level 3 climb
         addSequential(new ClimbLevel());
         // Wait for the user to start the wombo combo
+        addSequential(new WaitForNext());
+        
+        addSequential(new MGARetract());
+        
         addSequential(new WaitForNext());
         
         // We are now on level 3, so WomboCombo

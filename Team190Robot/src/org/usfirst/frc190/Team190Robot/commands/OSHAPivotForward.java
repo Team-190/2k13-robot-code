@@ -29,14 +29,14 @@ public class  OSHAPivotForward extends Command {
         requires(Robot.oSHA);
         
         // TODO: Time this process
-        this.setTimeout(2.0);
+        this.setTimeout(3.0);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
         Robot.oSHA.setPosition(OSHA.OSHA_FORWARD);
-        if(Robot.dumper.isStored())
-            Robot.dumper.goStore();
+        if(!Robot.dumper.isStored())
+            Robot.dumper.store();
     }
 
     // Called repeatedly when this Command is scheduled to run

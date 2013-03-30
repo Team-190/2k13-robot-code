@@ -24,7 +24,7 @@ public class Shooter extends Subsystem {
 
     // Actuators
     private SpeedController wheelVictors = new Victor(RobotMap.SHOOTER_WHEEL_VICTOR);
-    private SpeedController pitchVictor = new Victor(RobotMap.SHOOTER_PITCH_VICTOR);
+    public SpeedController pitchVictor = new Victor(RobotMap.SHOOTER_PITCH_VICTOR);
     private Solenoid feederSolenoid = new Solenoid(RobotMap.SHOOTER_FEEDER_SOLENDOID);
     // Sensors
     private Encoder wheelEncoder = new Encoder(11,12);
@@ -32,7 +32,7 @@ public class Shooter extends Subsystem {
     private DigitalInput pitchLowerLimit = new DigitalInput(RobotMap.SHOOTER_LOWER_LIMIT);
     // PID Controllers
     private PIDController wheelPID;
-    private PIDController pitchPID = new PIDController(kP_PIVOT, kI_PIVOT, kD_PIVOT, pitchEncoder, pitchVictor);
+    public PIDController pitchPID = new PIDController(kP_PIVOT, kI_PIVOT, kD_PIVOT, pitchEncoder, pitchVictor);
     // Feeder Positions
     public static final boolean FEEDER_FEED = false;
     public static final boolean FEEDER_RETRACT = true;
@@ -48,7 +48,7 @@ public class Shooter extends Subsystem {
     
     public static final double MAX_DISTANCE = 13.3;
     public static final double COLLECT_DISTANCE = 6;
-    public static final double AUTONOMOUS_DISTANCE = 11.75;
+    public static final double AUTONOMOUS_DISTANCE = 13.2;
     public static final double FEEDER_STATION_DISTANCE = 12;
     
     public static final double IDEAL_WHEEL_SPEED = -3400;
@@ -65,7 +65,7 @@ public class Shooter extends Subsystem {
         wheelEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
         wheelEncoder.setReverseDirection(true);
         wheelEncoder.start();
-        pitchEncoder.setDistancePerPulse(0.002);
+        pitchEncoder.setDistancePerPulse(0.72/250.0);
         pitchEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
         pitchEncoder.start();
 

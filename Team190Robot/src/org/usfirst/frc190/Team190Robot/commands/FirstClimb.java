@@ -31,7 +31,7 @@ public class FirstClimb extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.oi.nextButton.get();
+        return Robot.oi.nextButton.get() && Robot.sinceEnable.get() > 2.0;
     }
 
     // Called once after isFinished returns true

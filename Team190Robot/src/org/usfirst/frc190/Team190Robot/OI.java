@@ -191,13 +191,13 @@ public class OI {
          * Collector Commands
          */
         dumperDump = new AnalogButton(1.1, DUMPER_CONTROL);
-        dumperDump.whenPressed(new DumperScore());
+        dumperDump.whenPressed(new DumperScoreDispatcher());
         
         dumperCollect = new AnalogButton(2.2, DUMPER_CONTROL);
-        dumperCollect.whenPressed(new DumperCollect());
+        dumperCollect.whenPressed(new DumperCollectDispatcher());
         
         dumperStore = new AnalogButton(3.3, DUMPER_CONTROL);
-        dumperStore.whenPressed(new DumperStore());
+        dumperStore.whenPressed(new DumperStoreDispatcher());
         
         shooterStore = new AnalogButton(3.3, SHOOTER_STATE_BUTTONS);
         shooterStore.whenPressed(new ShooterStore());
@@ -218,7 +218,7 @@ public class OI {
         shooterSpeedDown = new AnalogButton(1.65, SHOOTER_PITCH_JOG);
          
         shootButton = new DigitalIOButton(SHOOTER_SHOOT_BUTTON);
-        //shootButton.whenPressed(new Shoot());
+        shootButton.whenPressed(new Shoot());
         
         
         // SmartDashboard Buttons
@@ -244,6 +244,7 @@ public class OI {
 
         SmartDashboard.putData("Dumper Store", new DumperStore());
 
+        SmartDashboard.putData("DeWomboCombo", new DeWomboCombo());
         SmartDashboard.putData("Dumper Score", new DumperScore());
 
         SmartDashboard.putData("Level 1", new Level1());

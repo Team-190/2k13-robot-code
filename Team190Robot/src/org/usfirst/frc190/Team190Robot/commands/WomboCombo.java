@@ -15,10 +15,10 @@ public class WomboCombo extends CommandGroup {
     
     public WomboCombo() {
         // Score the colored discs
-        addSequential(new DumperScore());
+        addSequential(new DumperScoreDispatcher());
         // Wait for the user to confirm the discs have scored
         addSequential(new WaitForNext());
         // Store the dumper again
-        addSequential(new DumperStore());
+        addSequential(new DeWomboComboDispatcher());
     }
 }
