@@ -26,6 +26,7 @@ public class  DumperScore extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        Robot.dumper.elbowPID.setOutputRange(-0.3, 1.0);
         Robot.dumper.goScore();
     }
 
@@ -41,6 +42,7 @@ public class  DumperScore extends Command {
     // Called once after isFinished returns true
     protected void end() {
         Robot.dumper.stopMovement();
+        Robot.dumper.elbowPID.setOutputRange(-0.3, 0.6); 
     }
 
     // Called when another command which requires one or more of the same

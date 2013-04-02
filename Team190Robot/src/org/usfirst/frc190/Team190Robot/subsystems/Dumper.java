@@ -39,7 +39,7 @@ public class Dumper extends Subsystem {
     
     // Sensors
     public VexEncoder bucketEncoder = new VexEncoder(RobotMap.DUMPER_BUCKET_ENCODER);
-    private AnalogChannel elbowPot = new AnalogChannel(RobotMap.DUMPER_ELBOW_POT);
+    public AnalogChannel elbowPot = new AnalogChannel(RobotMap.DUMPER_ELBOW_POT);
     
     // PID Controllers
     public PIDController bucketPID = new PIDController(kP_BUCKET, kI_BUCKET, kD_BUCKET, bucketEncoder, bucketMotor);
@@ -66,14 +66,16 @@ public class Dumper extends Subsystem {
     /*
     public final double FEEDER_SLOT_ELBOW = 1.5;
     public final double FEEDER_SLOT_WRIST = -.437; */
-    public final double FEEDER_SLOT_ELBOW = 1.8;
+    //public final double FEEDER_SLOT_ELBOW = 2.219;
     public final double FEEDER_SLOT_WRIST = -1.65;
-    public final double STORE_ELBOW = 1.13;
-    public final double STORE_WRIST = 0.0;
-    public final double CLEAR_ELBOW = 1.5;
+    public static double STORE_ELBOW = 0.944;
+    public static double STORE_WRIST = 0.0;
+    //public final double CLEAR_ELBOW = 1.344;
     public final double CLEAR_WRIST = 0.0;
-    public final double WOMBO_ELBOW = 3.68;
+    //public final double WOMBO_ELBOW = 4.119;
     public final double WOMBO_WRIST = -1.5;
+    
+    
     
     // we start off stored
     private boolean isStored = true;
@@ -88,7 +90,7 @@ public class Dumper extends Subsystem {
         elbowPID.setAbsoluteTolerance(0.05); 
         elbowPID.setOutputRange(-0.3, 0.6); 
         elbowPID.addTerm(new GravityCompensationTerm(kG_ELBOW, T_ELBOW));
-       
+        
         
         // Add components to the live window
         LiveWindow.addActuator("Dumper", "Bucket Motor", (Victor) bucketMotor);
@@ -98,6 +100,19 @@ public class Dumper extends Subsystem {
         LiveWindow.addActuator("Dumper", "Elbow PID", elbowPID);
     }
 
+    private double getClearElbow(){
+        return 0.4 + this.getStoreElbow();
+    }
+    
+    private double getCollectElbow(){
+        return 0.7 + this.getStoreElbow();
+    }
+    private double getStoreElbow(){
+        return this.STORE_ELBOW;
+    }
+    private double getWomboElbow(){
+        return 2.6 + this.getStoreElbow();
+    }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public void initDefaultCommand() {
@@ -131,10 +146,10 @@ public class Dumper extends Subsystem {
     public void stopMovement(){
         bucketPID.setSetpoint(bucketEncoder.getPosition());
         elbowPID.setSetpoint(elbowPot.getAverageVoltage());
-        bucketMotor.set(0.0);
-        elbowMotor.set(0.0);
-        bucketPID.disable();
-        elbowPID.disable();
+        //bucketMotor.set(0.0);
+        //elbowMotor.set(0.0);
+        //bucketPID.disable();
+        //elbowPID.disable();
     }
 
     public void goClearBucket(){
@@ -144,12 +159,12 @@ public class Dumper extends Subsystem {
     }
     public void goClearElbow(){
         isStored = false;
-        this.elbowPID.setSetpoint(CLEAR_ELBOW);
+        this.elbowPID.setSetpoint(this.getClearElbow());
         this.elbowPID.enable();
     }
     public void goCollectElbow(){
         isStored = false;
-        this.elbowPID.setSetpoint(FEEDER_SLOT_ELBOW);
+        this.elbowPID.setSetpoint(this.getCollectElbow());
         this.elbowPID.enable();
     }
     public void goCollectBucket(){
@@ -160,7 +175,7 @@ public class Dumper extends Subsystem {
     public void goScore(){
         isStored = false;
         this.elbowPID.enable();
-        this.elbowPID.setSetpoint(WOMBO_ELBOW);
+        this.elbowPID.setSetpoint(this.getWomboElbow());
         //wait to start the bucket moving
         Timer.delay(0.3);
         this.bucketPID.setSetpoint(WOMBO_WRIST);
@@ -169,7 +184,7 @@ public class Dumper extends Subsystem {
     }
     public void goStoreElbow(){
         isStored = true;
-        this.elbowPID.setSetpoint(STORE_ELBOW);
+        this.elbowPID.setSetpoint(this.getStoreElbow());
         this.elbowPID.enable();
     }
     public void goStoreBucket(){

@@ -101,6 +101,7 @@ public class Robot extends IterativeRobot {
         Robot.dumper.bucketEncoder.zero();
         Robot.dumper.stopMovement();
         sinceEnable.start();
+        Robot.dumper.STORE_ELBOW = Robot.dumper.elbowPot.getAverageVoltage();
     }
 
     /**

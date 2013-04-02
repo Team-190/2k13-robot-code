@@ -46,9 +46,9 @@ public class Shooter extends Subsystem {
     public static final double kI_PIVOT = 0;
     public static final double kD_PIVOT = 0;
     
-    public static final double MAX_DISTANCE = 13.3;
+    public static final double MAX_DISTANCE = 13.5;
     public static final double COLLECT_DISTANCE = 6;
-    public static final double AUTONOMOUS_DISTANCE = 13.2;
+    public static final double AUTONOMOUS_DISTANCE = 13.4;
     public static final double FEEDER_STATION_DISTANCE = 12;
     
     public static final double IDEAL_WHEEL_SPEED = -3400;
@@ -107,7 +107,7 @@ public class Shooter extends Subsystem {
         wheelPID.setAbsoluteTolerance(50);
         wheelPID.setOutputRange(0.0, 1.0);
         pitchPID.setContinuous(false);
-        pitchPID.setAbsoluteTolerance(0.1);
+        pitchPID.setAbsoluteTolerance(0.025);
         pitchPID.setInputRange(0, MAX_DISTANCE);
         pitchPID.setOutputRange(-1.0, 1.0);
 
